@@ -3,17 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 // import App from './App';
 // import App from './App2';
-import App from './AppRouter';
+import AppRouter from './AppNavBar';
 import reportWebVitals from './reportWebVitals';
-import { Button } from '@material-ui/core';
-import { ListItem } from '@material-ui/core';
-import { Router, Route } from 'react-router';
 
 ReactDOM.render(
   <React.StrictMode>
     <div>
-
-    <App />
+    <AppRouter />
     </div>
   </React.StrictMode>,
   document.getElementById('root')
