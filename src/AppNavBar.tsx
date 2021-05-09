@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    linkStyle: {
+      textDecoration: 'none',
+      color: 'black',
+      display: 'block'
+    }
   }),
 );
 
@@ -83,21 +88,27 @@ export default function ButtonAppBar() {
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
-              <Link to="/createTrustLine" style={{ textDecoration: 'none', display: 'block' }}>
+              <Link to="/createTrustLine" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Create TrustLine</MenuItem>
               </Link>
-              <Link to="/send" style={{ textDecoration: 'none', display: 'block' }}>
+              <Link to="/send" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Send </MenuItem>
               </Link>
-              <Link to="/accounts" style={{ textDecoration: 'none', display: 'block' }}>
+              <Link to="/accounts" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
             </Menu>
             <Typography variant="h6" className={classes.title}>
               {name1}
             </Typography>
-            <Link to="/profile" style={{ textDecoration: 'none', display: 'block' }}>
-              <AccountCircle />
+            <Link to="/profile" className={classes.linkStyle} style={{ color: 'white' }}>
+              <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit">
+                <AccountCircle />
+              </IconButton>
             </Link>
           </Toolbar>
         </AppBar>
