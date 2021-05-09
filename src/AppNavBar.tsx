@@ -3,12 +3,11 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Menu, Fade, MenuItem } from '@material-ui/core';
 import { MemoryRouter as Router, Route, Switch } from 'react-router';
-import { Link, Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import TrustLines from "./cards/TrustLines"
@@ -36,12 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ButtonAppBar() {
   const classes = useStyles();
-  const name1 = "Profile1"
 
-  //TODO my
-  const [state, setState] = React.useState({ name1: "init" });
-
-
+  const [state, setState] = React.useState({selectedItem: "Home"});
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -51,11 +46,13 @@ export default function ButtonAppBar() {
   };
 
 
-  const handleClose = () => {
-    setAnchorEl(null);
 
-    setState({ //TODO my
-      name1: "profile"
+  const handleClose = (e:any) => {
+    setAnchorEl(null);
+    
+    const value = e.currentTarget.outerText
+    setState({ 
+      selectedItem: !value?"Profile":value
     });
   };
 
@@ -99,9 +96,9 @@ export default function ButtonAppBar() {
               </Link>
             </Menu>
             <Typography variant="h6" className={classes.title}>
-              {name1}
+              {state.selectedItem}
             </Typography>
-            <Link to="/profile" className={classes.linkStyle} style={{ color: 'white' }}>
+            <Link to="/profile" onClick={handleClose} className={classes.linkStyle} style={{ color: 'white' }}>
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
