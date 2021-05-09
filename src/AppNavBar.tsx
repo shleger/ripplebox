@@ -11,13 +11,15 @@ import { Link } from 'react-router-dom';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import TrustLines from "./cards/TrustLines"
+import Profile from './cards/Profile';
+
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      width: '440px',
+      width: '540px',
       marginLeft: "auto",
       marginRight: "auto"
 
@@ -150,9 +152,5 @@ export default function ButtonAppBar() {
 
   function Users() {
     return <h2>Send</h2>;
-  }
-
-  function Profile() {
-    return <h2>Profile</h2>;
   }
 }
