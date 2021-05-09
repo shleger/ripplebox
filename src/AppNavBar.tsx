@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Menu, Fade, MenuItem } from '@material-ui/core';
+import { MemoryRouter as Router, Route, Switch } from 'react-router';
+import { Link, Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,9 +30,9 @@ export default function ButtonAppBar() {
   const name1 = "Profile1"
 
   //TODO my
-  const [state, setState] = React.useState({name1: "init"});
+  const [state, setState] = React.useState({ name1: "init" });
 
-  
+
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -50,42 +52,83 @@ export default function ButtonAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            id="fade-button"
-            aria-controls="fade-menu"
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            edge="start" className={classes.menuButton}
-            color="inherit"
-            aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            id="fade-menu"
-            MenuListProps={{
-              'aria-labelledby': 'fade-button',
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Fade}
-            getContentAnchorEl={null}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            transformOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <MenuItem onClick={handleClose}>{name1}</MenuItem>
-            <MenuItem onClick={handleClose}>My account2</MenuItem>
-            <MenuItem onClick={handleClose}>Logout3</MenuItem>
-          </Menu>
-          <Typography variant="h6" className={classes.title}>
-            {name1}
-          </Typography>
-          <Button color="inherit">Login1</Button>
-        </Toolbar>
-      </AppBar>
+      <Router>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              id="fade-button"
+              aria-controls="fade-menu"
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+              onClick={handleClick}
+              edge="start" className={classes.menuButton}
+              color="inherit"
+              aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="fade-menu"
+              MenuListProps={{
+                'aria-labelledby': 'fade-button',
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+              getContentAnchorEl={null}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+              transformOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>{name1}</MenuItem>
+              </Link>
+              <Link to="/users" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>item2</MenuItem>
+              </Link>
+              <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>item3</MenuItem>
+              </Link>
+            </Menu>
+            <Typography variant="h6" className={classes.title}>
+              {name1}
+            </Typography>
+            <Button color="inherit">Login1</Button>
+          </Toolbar>
+        </AppBar>
+        
+        <Switch>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/news">
+            <News />
+          </Route>
+
+          <Route path="/">
+            <Home />
+          </Route>
+
+        </Switch>
+      </Router>
     </div>
   );
+
+  function News() {
+    return <h2>News</h2>;
+  }
+
+  function Home() {
+    return <h2>Home</h2>;
+  }
+
+  function About() {
+    return <h2>About</h2>;
+  }
+
+  function Users() {
+    return <h2>Users</h2>;
+  }
 }
