@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      width: '440px',
+      marginLeft: "auto",
+      marginRight: "auto"
+
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -36,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function ButtonAppBar() {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({selectedItem: "Home"});
+  const [state, setState] = React.useState({ selectedItem: "Home" });
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -47,12 +51,12 @@ export default function ButtonAppBar() {
 
 
 
-  const handleClose = (e:any) => {
+  const handleClose = (e: any) => {
     setAnchorEl(null);
-    
+
     const value = e.currentTarget.outerText
-    setState({ 
-      selectedItem: !value?"Profile":value
+    setState({
+      selectedItem: !value ? "Profile" : value
     });
   };
 
