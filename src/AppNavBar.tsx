@@ -25,14 +25,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const name1 = "Profile1"
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  //TODO my
+  const [state, setState] = React.useState({name1: "init"});
+
+  
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: any) => {
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
+
   const handleClose = () => {
     setAnchorEl(null);
+
+    setState({ //TODO my
+      name1: "profile"
+    });
   };
 
   return (
@@ -59,13 +72,16 @@ export default function ButtonAppBar() {
             open={open}
             onClose={handleClose}
             TransitionComponent={Fade}
+            getContentAnchorEl={null}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
           >
-            <MenuItem onClick={handleClose}>Profile1</MenuItem>
+            <MenuItem onClick={handleClose}>{name1}</MenuItem>
             <MenuItem onClick={handleClose}>My account2</MenuItem>
             <MenuItem onClick={handleClose}>Logout3</MenuItem>
           </Menu>
           <Typography variant="h6" className={classes.title}>
-            News123
+            {name1}
           </Typography>
           <Button color="inherit">Login1</Button>
         </Toolbar>
