@@ -9,8 +9,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Menu, Fade, MenuItem } from '@material-ui/core';
 import { MemoryRouter as Router, Route, Switch } from 'react-router';
 import { Link, Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import MyPaper from "./cards/MyPaper"
+import TrustLines from "./cards/TrustLines"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -82,32 +83,40 @@ export default function ButtonAppBar() {
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
               transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
-              <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>About</MenuItem>
+              <Link to="/createTrustLine" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>Create TrustLine</MenuItem>
               </Link>
-              <Link to="/users" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>Users</MenuItem>
+              <Link to="/send" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>Send </MenuItem>
               </Link>
-              <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>News</MenuItem>
+              <Link to="/accounts" style={{ textDecoration: 'none', display: 'block' }}>
+                <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
             </Menu>
             <Typography variant="h6" className={classes.title}>
               {name1}
             </Typography>
-            <Button color="inherit">Login1</Button>
+            <Link to="/profile" style={{ textDecoration: 'none', display: 'block' }}>
+              <AccountCircle />
+            </Link>
           </Toolbar>
         </AppBar>
-        
+
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/createTrustLine">
+            <TrustLines />
           </Route>
-          <Route path="/users">
+
+          <Route path="/send">
             <Users />
           </Route>
-          <Route path="/news">
+
+          <Route path="/accounts">
             <News />
+          </Route>
+
+          <Route path="/profile">
+            <Profile />
           </Route>
 
           <Route path="/">
@@ -120,18 +129,18 @@ export default function ButtonAppBar() {
   );
 
   function News() {
-    return <h2>News</h2>;
+    return <h2>Accounts</h2>;
   }
 
   function Home() {
     return <h2>Home</h2>;
   }
 
-  function About() {
-    return <MyPaper />;
+  function Users() {
+    return <h2>Send</h2>;
   }
 
-  function Users() {
-    return <h2>Users</h2>;
+  function Profile() {
+    return <h2>Profile</h2>;
   }
 }

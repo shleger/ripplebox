@@ -21,7 +21,7 @@ export default function SimplePaper() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <Paper elevation={3} >
         <Typography>ssss</Typography>
       </Paper>
