@@ -10,6 +10,9 @@ import { Menu, Fade, MenuItem } from '@material-ui/core';
 import { MemoryRouter as Router, Route, Switch } from 'react-router';
 import { Link, Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
 
+import MyPaper from "./cards/MyPaper"
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -80,13 +83,13 @@ export default function ButtonAppBar() {
               transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
               <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>{name1}</MenuItem>
+                <MenuItem onClick={handleClose}>About</MenuItem>
               </Link>
               <Link to="/users" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>item2</MenuItem>
+                <MenuItem onClick={handleClose}>Users</MenuItem>
               </Link>
               <Link to="/about" style={{ textDecoration: 'none', display: 'block' }}>
-                <MenuItem onClick={handleClose}>item3</MenuItem>
+                <MenuItem onClick={handleClose}>News</MenuItem>
               </Link>
             </Menu>
             <Typography variant="h6" className={classes.title}>
@@ -125,7 +128,7 @@ export default function ButtonAppBar() {
   }
 
   function About() {
-    return <h2>About</h2>;
+    return <MyPaper />;
   }
 
   function Users() {
