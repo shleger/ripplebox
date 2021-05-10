@@ -37,22 +37,28 @@ export default function SimplePaper() {
   const [secret, setSecret] = useState("")
   const [user, setUser] = useState("")
 
+
   useEffect(() => {
-    document.title = `You clicked ${address} times`;
-    localStorage.setItem('accAddress', address)
-    localStorage.setItem('accSecret', secret)
-    localStorage.setItem('accUser', user)
-  });
+  // setAddress(address);setSecret(secret);setUser(user)
+  setUser("user111")
+  },[]); // [] --call only one time
 
 
 
+const saveData = ()=> {
+  localStorage.setItem('accAddress', address)
+  localStorage.setItem('accSecret', secret)
+  localStorage.setItem('accUser', user)
+  // TODO === JSON.stringify
+
+}
 
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
         <Typography variant="h5" gutterBottom>Testnet credentials</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Name" onChange= {(e) => setUser(e.target.value)}/>
+          <TextField id="standard-basic" label="Name" onChange= {(e) => setUser(e.target.value)} value={user? user: ""} />
           <TextField id="standard-basic" label="Account address" onChange= {(e) => setAddress(e.target.value)} />
           <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange= {(e) => setSecret(e.target.value)}/>
           <Button
@@ -60,7 +66,7 @@ export default function SimplePaper() {
             color="primary"
             size="large"
             //just for sure
-            onClick={() => {setAddress(address);setSecret(secret);setUser(user)}}
+            onClick={saveData}
             className={classes.button}
             startIcon={<SaveIcon />}
           >
