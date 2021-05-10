@@ -32,35 +32,39 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SimplePaper() {
   const classes = useStyles();
-  
+
   const [address, setAddress] = useState("")
   const [secret, setSecret] = useState("")
   const [user, setUser] = useState("")
 
 
   useEffect(() => {
-  // setAddress(address);setSecret(secret);setUser(user)
-  setUser("user111")
-  },[]); // [] --call only one time
+
+    setUser(localStorage.getItem("accUser") + "")
+    setAddress(localStorage.getItem("accAddress") + "")
+    setSecret(localStorage.getItem("accSecret") + "")
+
+  }, []); // [] --call only one time
 
 
 
-const saveData = ()=> {
-  localStorage.setItem('accAddress', address)
-  localStorage.setItem('accSecret', secret)
-  localStorage.setItem('accUser', user)
-  // TODO === JSON.stringify
+  const saveData = () => {
+    // TODO === JSON.stringify with user key or prefix !!!
 
-}
+    localStorage.setItem('accAddress', address)
+    localStorage.setItem('accSecret', secret)
+    localStorage.setItem('accUser', user)
+
+  }
 
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
         <Typography variant="h5" gutterBottom>Testnet credentials</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Name" onChange= {(e) => setUser(e.target.value)} value={user? user: ""} />
-          <TextField id="standard-basic" label="Account address" onChange= {(e) => setAddress(e.target.value)} />
-          <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange= {(e) => setSecret(e.target.value)}/>
+          <TextField id="standard-basic" label="Name" onChange={(e) => setUser(e.target.value)} value={user ? user : ""} />
+          <TextField id="standard-basic" label="Account address" onChange={(e) => setAddress(e.target.value)} value={address ? address : ""} />
+          <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setSecret(e.target.value)} value={secret ? secret : ""} />
           <Button
             variant="contained"
             color="primary"
