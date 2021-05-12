@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { FormControl, Input, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core';
@@ -26,6 +26,10 @@ export default function SimplePaper() {
   const classes = useStyles();
   const [xrpBal, setXrpBal] = useState("")
 
+  useEffect(() => {
+    AccountApi().then((val) => setXrpBal(String(val)))
+  }, []);
+
 
   return (
     <div className={classes.root} >
@@ -44,7 +48,6 @@ export default function SimplePaper() {
           <Input
             id="standard-adornment-amount"
             value={xrpBal}
-            onClick={() => AccountApi().then((dd)=> setXrpBal(String(dd)))}
             startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
           />
         </FormControl>
