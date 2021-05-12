@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { FormControl, Input, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core';
+import { CircularProgress, FormControl, Input, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core';
 import { InputBase } from '@material-ui/core';
 import AccountApi from '../services/AccountApi';
 
@@ -25,15 +25,17 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimplePaper() {
   const classes = useStyles();
   const [xrpBal, setXrpBal] = useState("")
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
-    AccountApi().then((val) => setXrpBal(String(val)))
+    AccountApi().then((val) => {setXrpBal(String(val));setLoading(true);})
   }, []);
 
 
   return (
     <div className={classes.root} >
-      <Paper elevation={3} >
+      { loading?
+       <Paper elevation={3} onLoadedData={() => loading} >
         <Typography> XRP founds</Typography>
         <InputBase
           // className={classes.margin}
@@ -69,6 +71,7 @@ export default function SimplePaper() {
           />
         </FormControl>
       </Paper>
+        : <CircularProgress />}
     </div>
   );
 }
