@@ -1,14 +1,15 @@
 import { useState } from "react";
-import ripple, { RippleAPI } from "ripple-lib";
+import { RippleAPI } from "ripple-lib";
+import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
 
 
-export default function AccountApi(): string {
+export default function AccountApi() {
 
     const api = new RippleAPI({
         server: 'wss://s.altnet.rippletest.net:51233'
     });
 
-    api.connect().then(() => {
+    const promise = api.connect().then(() => {
         /* begin adress to check ------------------------------------ */
         const myAddress = localStorage.getItem("accAddress") + "";;
 
@@ -17,14 +18,19 @@ export default function AccountApi(): string {
         /* end adress to check -------------------------------------- */
 
     }).then(info => {
+
         console.log(JSON.stringify(info));
         console.log('getAccountInfo done');
-    }).then(() => {
-        return api.disconnect();
-    }).then(() => {
-        console.log('done and disconnected.');
+        return info
+
+    }).then((info) => {
+        api.disconnect();
+        return info
+    }).then((info: FormattedGetAccountInfoResponse) => {
+        console.log('done and disconnected.' + info.xrpBalance);
+        return info.xrpBalance
     }).catch(console.error);
 
-    return "fffff"
+    return promise
 
 }

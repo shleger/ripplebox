@@ -101,6 +101,9 @@ export default function ButtonAppBar() {
               <Link to="/accounts" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
+              <Link to="/exchange" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Exchange</MenuItem>
+              </Link>
               <Link to="/" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Home</MenuItem>
               </Link>
@@ -137,9 +140,15 @@ export default function ButtonAppBar() {
             <Profile />
           </Route>
 
+          <Route path="/exchange">
+            <Exchange />
+          </Route>
+
           <Route path="/">
             <Home />
           </Route>
+
+
 
         </Switch>
       </Router>
@@ -152,5 +161,9 @@ export default function ButtonAppBar() {
 
   function Users() {
     return <h2>Send</h2>;
+  }
+
+  function Exchange() {
+    return <h2>Exchange</h2>;
   }
 }

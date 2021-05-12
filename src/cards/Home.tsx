@@ -44,14 +44,12 @@ export default function SimplePaper() {
           <Input
             id="standard-adornment-amount"
             value={xrpBal}
-            onClick={() => {setXrpBal(AccountApi()); }}
+            onClick={() => AccountApi().then((dd)=> setXrpBal(String(dd)))}
             startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
           />
         </FormControl>
 
         <Typography>Open trustlines</Typography>
-
-
         <InputBase
           // className={classes.margin}
           defaultValue="Naked input"
@@ -67,10 +65,6 @@ export default function SimplePaper() {
             startAdornment={<InputAdornment position="start">€</InputAdornment>}
           />
         </FormControl>
-
-
-
-
       </Paper>
     </div>
   );
