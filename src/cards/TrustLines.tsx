@@ -23,7 +23,8 @@ export default function SimplePaper() {
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
-        <Typography>ssss</Typography>
+      <Typography>Create trustline button</Typography>
+      <Typography>List trustlines</Typography>
       </Paper>
     </div>
   );

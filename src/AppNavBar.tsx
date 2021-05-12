@@ -12,6 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import TrustLines from "./cards/TrustLines"
 import Profile from './cards/Profile';
+import Home from './cards/Home';
 
 
 
@@ -100,6 +101,9 @@ export default function ButtonAppBar() {
               <Link to="/accounts" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
+              <Link to="/" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Home</MenuItem>
+              </Link>
             </Menu>
             <Typography variant="h6" className={classes.title}>
               {state.selectedItem}
@@ -144,10 +148,6 @@ export default function ButtonAppBar() {
 
   function News() {
     return <h2>Accounts</h2>;
-  }
-
-  function Home() {
-    return <h2>Home</h2>;
   }
 
   function Users() {
