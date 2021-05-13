@@ -4,6 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import { CircularProgress, FormControl, Input, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core';
 import { InputBase } from '@material-ui/core';
 import AccountApi from '../services/AccountApi';
+import LinesApi from '../services/LinesApi ';
+import { FormattedTrustline } from 'ripple-lib/dist/npm/common/types/objects';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,11 +30,24 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimplePaper() {
   const classes = useStyles();
   const [xrpBal, setXrpBal] = useState("")
+  const [usdBal, setUsdBal] = useState("")
+  const [eurBal, setEurBal] = useState("")
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const storKey = window.location.pathname
 
   useEffect(() => {
     try {
-      AccountApi(window.location.pathname).then((val) => { setXrpBal(String(val)); setIsLoaded(true); })
+      AccountApi(storKey).then((val) => { setXrpBal(String(val)); setIsLoaded(true); })
+      LinesApi(storKey).then((val) => {
+
+        const arr: void | Array<FormattedTrustline> = val
+        if (arr instanceof Array) {
+          setEurBal(arr[0].state.balance)
+          setUsdBal(arr[1].state.balance)
+        }
+
+      })
+
     } catch (error) {
       console.log(error)
       setIsLoaded(true)
@@ -58,6 +73,7 @@ export default function SimplePaper() {
             <Input
               id="standard-adornment-amount"
               value={xrpBal}
+              disabled={true}
               startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
             />
           </FormControl>
@@ -72,9 +88,23 @@ export default function SimplePaper() {
             <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
             <Input
               id="standard-adornment-amount"
-              value={xrpBal}
-              // onChange={handleChange('amount')}
+              value={eurBal}
+              disabled={true}
               startAdornment={<InputAdornment position="start">€</InputAdornment>}
+            />
+          </FormControl>
+          <InputBase
+            className={classes.margin}
+            defaultValue="Naked input"
+            inputProps={{ 'aria-label': 'naked' }}
+          />
+          <FormControl  >
+            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+            <Input
+              id="standard-adornment-amount"
+              value={usdBal}
+              disabled={true}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
             />
           </FormControl>
         </Paper>
