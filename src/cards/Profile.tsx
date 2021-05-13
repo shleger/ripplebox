@@ -36,7 +36,8 @@ export default function SimplePaper() {
   const [profileData, setProfileData] = useState({
     accUser: "",
     accAddress: "",
-    accSecret: ""
+    accSecret: "",
+    server:"wss://s.altnet.rippletest.net:51233"
   })
 
 
@@ -63,6 +64,8 @@ export default function SimplePaper() {
           <TextField id="standard-basic" label="Name" onChange={(e) => setProfileData({ ...profileData, accUser: e.target.value })} value={profileData?.accUser} />
           <TextField id="standard-basic" label="Account address" onChange={(e) => setProfileData({ ...profileData, accAddress: e.target.value })} value={profileData?.accAddress} />
           <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setProfileData({ ...profileData, accSecret: e.target.value })} value={profileData?.accSecret} />
+          <TextField id="standard-basic" label="Server" onChange={(e) => setProfileData({ ...profileData, server: e.target.value })} value={profileData?.server} />
+
           <Button
             variant="contained"
             color="primary"

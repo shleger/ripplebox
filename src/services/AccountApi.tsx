@@ -4,14 +4,10 @@ import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/acco
 
 
 export default function AccountApi() {
-
-    const api = new RippleAPI({
-        server: 'wss://s.altnet.rippletest.net:51233'
-    });
-
+    const profileData = JSON.parse(String(localStorage.getItem("profileData")));;
+    const api = new RippleAPI({ server: profileData.server });
     const promise = api.connect().then(() => {
         /* begin adress to check ------------------------------------ */
-        const profileData = JSON.parse(String(localStorage.getItem("profileData")));;
 
         console.log('getting account info for', profileData);
         return api.getAccountInfo(profileData.accAddress);
