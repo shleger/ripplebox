@@ -3,8 +3,12 @@ import { RippleAPI } from "ripple-lib";
 import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
 
 
-export default function AccountApi() {
-    const profileData = JSON.parse(String(localStorage.getItem("profileData")));;
+export default function AccountApi(storageKey:string) {
+    const pd = localStorage.getItem(storageKey)
+    if(pd == null ){
+        throw new Error("Not found creds")
+    }
+    const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
     const promise = api.connect().then(() => {
         /* begin adress to check ------------------------------------ */

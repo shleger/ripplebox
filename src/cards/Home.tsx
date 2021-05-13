@@ -31,8 +31,13 @@ export default function SimplePaper() {
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   useEffect(() => {
-    AccountApi().then((val) => { setXrpBal(String(val)); setIsLoaded(true); })
-    // setLoading(true)
+    try {
+      AccountApi(window.location.pathname).then((val) => { setXrpBal(String(val)); setIsLoaded(true); })
+    } catch (error) {
+      console.log(error)
+      setIsLoaded(true)
+
+    }
   }, []);
 
 

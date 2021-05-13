@@ -34,11 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimplePaper() {
   const classes = useStyles();
   const [profileData, setProfileData] = useState(initProfileData)
+  const storageKey = window.location.pathname
+  // const storageKey = 'profileData'
 
 
   useEffect(() => {
 
-    const parsed = localStorage.getItem('profileData')
+
+    const parsed = localStorage.getItem(storageKey)
     if (parsed?.length != 0) {
       // setProfileData(JSON.parse(String(parsed))) --works too
       //https://stackoverflow.com/a/62413684
@@ -51,7 +54,7 @@ export default function SimplePaper() {
 
 
   const saveData = () => {
-    localStorage.setItem('profileData', JSON.stringify(profileData))
+    localStorage.setItem(storageKey, JSON.stringify(profileData))
   }
 
   return (
