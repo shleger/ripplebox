@@ -5,6 +5,7 @@ import { Typography } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import { initProfileData, ProfileData } from '../services/LocalService'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,23 +33,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SimplePaper() {
   const classes = useStyles();
-
-  const [profileData, setProfileData] = useState({
-    accUser: "",
-    accAddress: "",
-    accSecret: "",
-    server:"wss://s.altnet.rippletest.net:51233"
-  })
+  const [profileData, setProfileData] = useState(initProfileData)
 
 
   useEffect(() => {
 
     const parsed = localStorage.getItem('profileData')
     if (parsed?.length != 0) {
-      setProfileData(JSON.parse(String(parsed)))
+      // setProfileData(JSON.parse(String(parsed))) --works too
+      //https://stackoverflow.com/a/62413684
+      const pdParsed: ProfileData = JSON.parse(String(parsed))
+      setProfileData(pdParsed)
     }
 
-  }, []); // [] --call only one time
+  }, []); // [] --call only one time when onLoad react component
 
 
 
