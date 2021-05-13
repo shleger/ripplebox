@@ -11,10 +11,10 @@ export default function AccountApi() {
 
     const promise = api.connect().then(() => {
         /* begin adress to check ------------------------------------ */
-        const myAddress = localStorage.getItem("accAddress") + "";;
+        const profileData = JSON.parse(String(localStorage.getItem("profileData")));;
 
-        console.log('getting account info for', myAddress);
-        return api.getAccountInfo(myAddress);
+        console.log('getting account info for', profileData);
+        return api.getAccountInfo(profileData.accAddress);
         /* end adress to check -------------------------------------- */
 
     }).then(info => {

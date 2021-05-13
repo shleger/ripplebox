@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
         height: theme.spacing(50),
       },
     },
+    margin: {
+      marginTop: '12px'
+    }
   }),
 );
 
@@ -25,52 +28,51 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimplePaper() {
   const classes = useStyles();
   const [xrpBal, setXrpBal] = useState("")
-  const [loading, setLoading] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   useEffect(() => {
-    AccountApi().then((val) => {setXrpBal(String(val));setLoading(true);})
+    AccountApi().then((val) => { setXrpBal(String(val)); setIsLoaded(true); })
+    // setLoading(true)
   }, []);
 
 
   return (
     <div className={classes.root} >
-      { loading?
-       <Paper elevation={3} onLoadedData={() => loading} >
-        <Typography> XRP founds</Typography>
-        <InputBase
-          // className={classes.margin}
-          defaultValue="Naked input"
-          inputProps={{ 'aria-label': 'naked' }}
-          style={{ marginTop: '12px' }}
-        />
-
-
-        <FormControl  >
-          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-          <Input
-            id="standard-adornment-amount"
-            value={xrpBal}
-            startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
+      { isLoaded ?
+        <Paper elevation={3} onLoadedData={() => isLoaded} >
+          <Typography variant="h5" > XRP founds</Typography>
+          <InputBase
+            className={classes.margin}
+            defaultValue="Naked input"
+            inputProps={{ 'aria-label': 'naked' }}
           />
-        </FormControl>
 
-        <Typography>Open trustlines</Typography>
-        <InputBase
-          // className={classes.margin}
-          defaultValue="Naked input"
-          inputProps={{ 'aria-label': 'naked' }}
-          style={{ marginTop: '12px' }}
-        />
-        <FormControl  >
-          <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-          <Input
-            id="standard-adornment-amount"
-            value={xrpBal}
-            // onChange={handleChange('amount')}
-            startAdornment={<InputAdornment position="start">€</InputAdornment>}
+
+          <FormControl  >
+            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+            <Input
+              id="standard-adornment-amount"
+              value={xrpBal}
+              startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
+            />
+          </FormControl>
+
+          <Typography variant="h5" className={classes.margin}>Lines</Typography>
+          <InputBase
+            className={classes.margin}
+            defaultValue="Naked input"
+            inputProps={{ 'aria-label': 'naked' }}
           />
-        </FormControl>
-      </Paper>
+          <FormControl  >
+            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+            <Input
+              id="standard-adornment-amount"
+              value={xrpBal}
+              // onChange={handleChange('amount')}
+              startAdornment={<InputAdornment position="start">€</InputAdornment>}
+            />
+          </FormControl>
+        </Paper>
         : <CircularProgress />}
     </div>
   );

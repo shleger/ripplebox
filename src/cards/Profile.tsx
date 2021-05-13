@@ -33,28 +33,26 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SimplePaper() {
   const classes = useStyles();
 
-  const [address, setAddress] = useState("")
-  const [secret, setSecret] = useState("")
-  const [user, setUser] = useState("")
+  const [profileData, setProfileData] = useState({
+    accUser: "",
+    accAddress: "",
+    accSecret: ""
+  })
 
 
   useEffect(() => {
 
-    setUser(localStorage.getItem("accUser") + "")
-    setAddress(localStorage.getItem("accAddress") + "")
-    setSecret(localStorage.getItem("accSecret") + "")
+    const parsed = localStorage.getItem('profileData')
+    if (parsed?.length != 0) {
+      setProfileData(JSON.parse(String(parsed)))
+    }
 
   }, []); // [] --call only one time
 
 
 
   const saveData = () => {
-    // TODO === JSON.stringify with user key or prefix !!!
-
-    localStorage.setItem('accAddress', address)
-    localStorage.setItem('accSecret', secret)
-    localStorage.setItem('accUser', user)
-
+    localStorage.setItem('profileData', JSON.stringify(profileData))
   }
 
   return (
@@ -62,9 +60,9 @@ export default function SimplePaper() {
       <Paper elevation={3} >
         <Typography variant="h5" gutterBottom>Testnet credentials</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Name" onChange={(e) => setUser(e.target.value)} value={user ? user : ""} />
-          <TextField id="standard-basic" label="Account address" onChange={(e) => setAddress(e.target.value)} value={address ? address : ""} />
-          <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setSecret(e.target.value)} value={secret ? secret : ""} />
+          <TextField id="standard-basic" label="Name" onChange={(e) => setProfileData({ ...profileData, accUser: e.target.value })} value={profileData?.accUser} />
+          <TextField id="standard-basic" label="Account address" onChange={(e) => setProfileData({ ...profileData, accAddress: e.target.value })} value={profileData?.accAddress} />
+          <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setProfileData({ ...profileData, accSecret: e.target.value })} value={profileData?.accSecret} />
           <Button
             variant="contained"
             color="primary"
