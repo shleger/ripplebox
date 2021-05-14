@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RippleAPI } from "ripple-lib";
 import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
 

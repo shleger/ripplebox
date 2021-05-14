@@ -42,8 +42,14 @@ export default function SimplePaper() {
 
         const arr: void | Array<FormattedTrustline> = val
         if (arr instanceof Array) {
-          setEurBal(arr[0].state.balance)
-          setUsdBal(arr[1].state.balance)
+          arr
+          .filter((r => r.specification.currency == 'USD'))
+          .map(m=> setUsdBal(m.state.balance))
+
+          arr
+          .filter((r => r.specification.currency == 'EUR'))
+          .map(m=> setEurBal(m.state.balance))
+
         }
 
       })
