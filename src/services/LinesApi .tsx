@@ -98,7 +98,7 @@ export function CreateTrustLineApi(storageKey: string, dest:string) {
 
     var txIdGlobal;
 
-    api.connect().then(() => {
+    const promise = api.connect().then(() => {
         console.log('Connected');
         return doPrepare()
     }).then(prepared => {
@@ -126,13 +126,15 @@ export function CreateTrustLineApi(storageKey: string, dest:string) {
     }).then((validated) => {
         console.log('validated');
         //TODO return getTran(txIdGlobal)
-        
-    }).then(() => {
+        return validated
+    }).then((validated) => {
         api.disconnect().then(() => {
             console.log('api disconnected');
-            // process.exit();
         });
+        return validated
     }).catch(console.error);
+
+    return promise
 
     //--- end main ----
 

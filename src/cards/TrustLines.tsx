@@ -6,6 +6,7 @@ import CallSplitIcon from '@material-ui/icons/CallSplit';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { CreateTrustLineApi } from '../services/LinesApi ';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,21 +36,22 @@ export default function SimplePaper() {
   const classes = useStyles();
   const [trustAccount, setTrustAccount] = useState("")
   const storageKey = window.location.pathname
+  const [isLoaded, setIsLoaded] = React.useState(true);
 
   const createTrustLine = () => {
-    
+    setIsLoaded(false)
     CreateTrustLineApi(storageKey, trustAccount)
+      .then(() => setIsLoaded(true))
 
   }
 
   return (
     <div className={classes.root} >
-      <Paper elevation={3} >
+      {isLoaded ? <Paper elevation={3} >
         <Typography>Create trustline button</Typography>
         <Typography>List trustlines</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Trusted accunt" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
-
+          <TextField id="standard-basic" label="Trusted account" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
           <Button
             variant="contained"
             color="primary"
@@ -63,6 +65,7 @@ export default function SimplePaper() {
       </Button>
         </form>
       </Paper>
+        : <CircularProgress />}
     </div>
   );
 }
