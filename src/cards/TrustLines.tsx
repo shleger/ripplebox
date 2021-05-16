@@ -48,8 +48,7 @@ export default function SimplePaper() {
   return (
     <div className={classes.root} >
       {isLoaded ? <Paper elevation={3} >
-        <Typography>Create trustline button</Typography>
-        <Typography>List trustlines</Typography>
+        <Typography variant="h5">Create TrustLine</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Trusted account" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
           <Button

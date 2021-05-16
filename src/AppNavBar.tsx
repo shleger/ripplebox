@@ -13,6 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import TrustLines from "./cards/TrustLines"
 import Profile from './cards/Profile';
 import Home from './cards/Home';
+import TrustedAccounts from './cards/AccountObjects';
 
 
 
@@ -95,11 +96,11 @@ export default function ButtonAppBar() {
               <Link to="/createTrustLine" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Create TrustLine</MenuItem>
               </Link>
+              <Link to="/accounts" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Account objects</MenuItem>
+              </Link>
               <Link to="/send" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Send </MenuItem>
-              </Link>
-              <Link to="/accounts" className={classes.linkStyle}>
-                <MenuItem onClick={handleClose}>Accounts</MenuItem>
               </Link>
               <Link to="/exchange" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Exchange</MenuItem>
@@ -129,12 +130,12 @@ export default function ButtonAppBar() {
           </Route>
 
           <Route path="/send">
-            <Users />
+            <Send />
           </Route>
 
           <Route path="/accounts">
-            <News />
-          </Route>
+            <TrustedAccounts/>
+           </Route>
 
           <Route path="/profile">
             <Profile />
@@ -155,15 +156,12 @@ export default function ButtonAppBar() {
     </div>
   );
 
-  function News() {
-    return <h2>Accounts</h2>;
-  }
-
-  function Users() {
+  function Send() {
     return <h2>Send</h2>;
   }
 
   function Exchange() {
     return <h2>Exchange</h2>;
   }
+  
 }

@@ -31,7 +31,7 @@ export default function LinesApi(storageKey: string) {
 }
 
 //https://testnet.xrpl.org/ --see explorer
-export function CreateTrustLineApi(storageKey: string, dest:string) {
+export function CreateTrustLineApi(storageKey: string, dest: string) {
 
     const pd = localStorage.getItem(storageKey)
     if (pd == null) {
@@ -69,7 +69,7 @@ export function CreateTrustLineApi(storageKey: string, dest:string) {
     }
 
     // use txBlob from the previous example
-    async function doSubmit(txBlob:any) {
+    async function doSubmit(txBlob: any) {
         const latestLedgerVersion = await api.getLedgerVersion()
 
         const result = await api.submit(txBlob)
@@ -84,9 +84,9 @@ export function CreateTrustLineApi(storageKey: string, dest:string) {
         return latestLedgerVersion + 1
     }
 
-    async function getTran(txID:any, minLedgerVersion:number) {
+    async function getTran(txID: any, minLedgerVersion: number) {
         try {
-           const tx = await api.getTransaction(txID, { minLedgerVersion: minLedgerVersion })
+            const tx = await api.getTransaction(txID, { minLedgerVersion: minLedgerVersion })
             console.log("Transaction result:", tx.outcome.result)
             console.log("Balance changes:", JSON.stringify(tx.outcome.balanceChanges))
         } catch (error) {
@@ -137,5 +137,60 @@ export function CreateTrustLineApi(storageKey: string, dest:string) {
     return promise
 
     //--- end main ----
+
+}
+
+export function RpcJsonAccountLines(storageKey: string) {
+
+
+    //extract to @injactable
+    const pd = localStorage.getItem(storageKey)
+    if (pd == null) {
+        throw new Error("Not found creds for LinesApi")
+    }
+    const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
+    const api = new RippleAPI({ server: profileData.server });
+
+    console.log("List lines account: {}", profileData.accAddress)
+
+
+    api.on('error', (errorCode, errorMessage) => {
+        console.log(errorCode + ': ' + errorMessage);
+    });
+    api.on('connected', () => {
+        console.log('==connected==');
+    });
+    api.on('disconnected', (code) => {
+        // code - [close code](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent) sent by the server
+        // will be 1000 if this was normal closure
+        if (code !== 1000) {
+            console.log('Connection is closed due to error: ' + code);
+        } else {
+            console.log('==connection is closed normally==: ' + code);
+        }
+    });
+
+
+    const promise = api.connect().then(() => {
+        console.log('Connected')
+
+        const account_objects_request = {
+            command: "account_lines",
+            account: profileData.accAddress,
+            ledger_index: "validated",
+            type: "check"
+        }
+
+        return api.connection.request(account_objects_request)
+    }).then(response => {
+        console.log("account_lines response:", JSON.stringify(response))
+        return response
+    }).then((response) => {
+        api.disconnect()
+        return response
+
+    }).catch(console.error)
+
+    return promise
 
 }
