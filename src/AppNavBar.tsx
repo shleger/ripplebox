@@ -14,6 +14,7 @@ import TrustLines from "./cards/TrustLines"
 import Profile from './cards/Profile';
 import Home from './cards/Home';
 import TrustedAccounts from './cards/AccountObjects';
+import SendAssest from './cards/SendAsset';
 
 
 
@@ -130,7 +131,7 @@ export default function ButtonAppBar() {
           </Route>
 
           <Route path="/send">
-            <Send />
+            <SendAssest />
           </Route>
 
           <Route path="/accounts">
@@ -156,9 +157,6 @@ export default function ButtonAppBar() {
     </div>
   );
 
-  function Send() {
-    return <h2>Send</h2>;
-  }
 
   function Exchange() {
     return <h2>Exchange</h2>;

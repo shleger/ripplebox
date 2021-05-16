@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function SimplePaper() {
+export default function TrustLines() {
   const classes = useStyles();
   const [trustAccount, setTrustAccount] = useState("")
   const storageKey = window.location.pathname
