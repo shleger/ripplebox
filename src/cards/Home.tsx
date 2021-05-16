@@ -69,7 +69,7 @@ export default function SimplePaper() {
           <Typography variant="h5" > XRP founds</Typography>
           <InputBase
             className={classes.margin}
-            defaultValue="Naked input"
+            defaultValue="Crypto"
             inputProps={{ 'aria-label': 'naked' }}
           />
 
@@ -87,7 +87,7 @@ export default function SimplePaper() {
           <Typography variant="h5" className={classes.margin}>Lines</Typography>
           <InputBase
             className={classes.margin}
-            defaultValue="Naked input"
+            defaultValue="Asset"
             inputProps={{ 'aria-label': 'naked' }}
           />
           <FormControl  >
@@ -101,7 +101,7 @@ export default function SimplePaper() {
           </FormControl>
           <InputBase
             className={classes.margin}
-            defaultValue="Naked input"
+            defaultValue="Asset"
             inputProps={{ 'aria-label': 'naked' }}
           />
           <FormControl  >

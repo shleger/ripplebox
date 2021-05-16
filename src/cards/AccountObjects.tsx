@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import { CreateTrustLineApi, RpcJsonAccountLines } from '../services/LinesApi ';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
+import { RpcJsonAccountLines } from '../services/LinesApi ';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,11 +71,8 @@ export default function SimplePaper() {
         lines.map((item: any) => item.id = i++)
         console.log("account_lines promise: " + JSON.stringify(lines))
 
-
         setRows(lines)
         setIsLoading(false)
-
-
 
       }
 

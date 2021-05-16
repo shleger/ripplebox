@@ -56,7 +56,7 @@ export default function SimplePaper() {
   const saveData = () => {
     localStorage.setItem(storageKey, JSON.stringify(profileData))
   }
-
+  
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
