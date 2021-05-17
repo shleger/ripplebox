@@ -8,14 +8,14 @@ export default function LinesApi(storageKey: string) {
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
+    console.log('Connect to ' + profileData.server )
+
     const promise = api.connect().then(() => {
         console.log('Connected')
 
-        return api.getTrustlines(profileData.accAddress)
+        return api.getBalanceSheet(profileData.accAddress)
     }).then(response => {
         console.log("account_lines response:", JSON.stringify(response))
-
-        // Disconnect and return
         return response
     }).then((response) => {
         api.disconnect()
