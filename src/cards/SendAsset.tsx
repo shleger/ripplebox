@@ -73,10 +73,9 @@ export default function SendAssest() {
   const sendValue = () => {
     setIsLoaded(false)
 
-    if(currency != 'XRP'){
       SendApi(storageKey,destAccount,currency,destValue,issuerAccount)
       .then(()=> setIsLoaded(true))
-    }
+
 
   }
   const handleChange = (event: any) => {

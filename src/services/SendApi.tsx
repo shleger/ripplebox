@@ -1,8 +1,8 @@
-import { RippleAPI } from "ripple-lib";
+import { RippleAPI, TransactionJSON } from "ripple-lib";
 import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
 
 
-export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount:string) {
+export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount: string) {
     const pd = localStorage.getItem(storageKey)
     if (pd == null) {
         throw new Error("Not found creds")
@@ -10,23 +10,38 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
     const fee = '12'
-    const maxLedgerVersionOffset = 2
+    const maxLedgerVersionOffset = 5
+
 
     console.log("Reciever address: {}", dest)
 
     async function doPrepare() {
+        let payload:TransactionJSON;
 
-        const preparedTx = await api.prepareTransaction({
-            "TransactionType": "Payment",
-            "Account": profileData.accAddress,
-            "Destination": dest,
-            "Amount": {
-                "currency": currency,
-                "value": String(amount),
-                "issuer": issuerAccount
-            },
-            "Fee": fee
-        }, {
+        if (currency != 'XRP') {
+            payload = {
+                "TransactionType": "Payment",
+                "Account": profileData.accAddress,
+                "Destination": dest,
+                "Amount": {
+                    "currency": currency,
+                    "value": String(amount),
+                    "issuer": issuerAccount
+                },
+                "Fee": fee
+            }
+
+        }else{
+            payload = {
+                "TransactionType": "Payment",
+                "Account": profileData.accAddress,
+                 "Amount": api.xrpToDrops(String(amount)), 
+                "Destination": dest
+              }
+
+        }
+
+        const preparedTx = await api.prepareTransaction(payload, {
             // Expire this transaction if it doesn't execute within ~5 minutes:
             "maxLedgerVersionOffset": maxLedgerVersionOffset
         })
