@@ -89,7 +89,7 @@ export default function HomePaper() {
           <Typography variant="h5" className={classes.margin}>Lines</Typography>
           {
             curBal?.assets?.map((sheet, i) => (
-              <div>
+              <div key={i}>
                 <InputBase
                   className={classes.margin}
                   defaultValue="Counterparty/Asset"
@@ -110,9 +110,8 @@ export default function HomePaper() {
 
 
           {
-
             curBal?.obligations?.map((sheet, i) => (
-              <div>
+              <div key={i}>
 
                 <InputBase
                   className={classes.margin}
