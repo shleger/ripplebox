@@ -84,19 +84,17 @@ export function CreateTrustLineApi(storageKey: string, dest: string) {
         return latestLedgerVersion + 1
     }
 
-    async function getTran(txID: any, minLedgerVersion: number) {
-        try {
-            const tx = await api.getTransaction(txID, { minLedgerVersion: minLedgerVersion })
-            console.log("Transaction result:", tx.outcome.result)
-            console.log("Balance changes:", JSON.stringify(tx.outcome.balanceChanges))
-        } catch (error) {
-            console.log("Couldn't get transaction outcome:", error)
-        }
-    }
+    // async function getTran(txID: any, minLedgerVersion: number) {
+    //     try {
+    //         const tx = await api.getTransaction(txID, { minLedgerVersion: minLedgerVersion })
+    //         console.log("Transaction result:", tx.outcome.result)
+    //         console.log("Balance changes:", JSON.stringify(tx.outcome.balanceChanges))
+    //     } catch (error) {
+    //         console.log("Couldn't get transaction outcome:", error)
+    //     }
+    // }
 
     // ------main----- dont forget apply ladger: rippled ledger_accept --conf ~/dev/ripple/cfg/rippled.cfg
-
-    var txIdGlobal;
 
     const promise = api.connect().then(() => {
         console.log('Connected');
@@ -106,7 +104,6 @@ export function CreateTrustLineApi(storageKey: string, dest: string) {
 
         const response = api.sign(prepared, profileData.accSecret)
         const txID = response.id
-        txIdGlobal = txID
         console.log("Identifying hash:", txID)
         const txBlob = response.signedTransaction
         console.log("Signed blob:")

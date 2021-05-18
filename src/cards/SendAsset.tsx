@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { MenuItem, Typography } from '@material-ui/core';
-import CallSplitIcon from '@material-ui/icons/CallSplit';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';

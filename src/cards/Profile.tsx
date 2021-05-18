@@ -42,14 +42,15 @@ export default function SimplePaper() {
 
 
     const parsed = localStorage.getItem(storageKey)
-    if (parsed?.length != 0) {
+    if (parsed?.length !== 0) {
       // setProfileData(JSON.parse(String(parsed))) --works too
       //https://stackoverflow.com/a/62413684
       const pdParsed: ProfileData = JSON.parse(String(parsed))
       setProfileData(pdParsed)
     }
 
-  }, []); // [] --call only one time when onLoad react component
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // [] --call only one time when onLoad react component
 
 
 

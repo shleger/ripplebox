@@ -80,7 +80,8 @@ export default function SimplePaper() {
 
 
 
-  }, []); // [] --call only one time when onLoad react component
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // [] --call only one time when onLoad react component
 
 
 

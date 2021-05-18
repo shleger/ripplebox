@@ -1,6 +1,4 @@
 import { RippleAPI, TransactionJSON } from "ripple-lib";
-import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
-
 
 export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount: string) {
     const pd = localStorage.getItem(storageKey)
@@ -18,7 +16,7 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
     async function doPrepare() {
         let payload:TransactionJSON;
 
-        if (currency != 'XRP') {
+        if (currency !== 'XRP') {
             payload = {
                 "TransactionType": "Payment",
                 "Account": profileData.accAddress,
@@ -68,7 +66,6 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
         return latestLedgerVersion + 1
     }
 
-    var txIdGlobal;
 
     const promise = api.connect().then(() => {
         console.log('Connected');
@@ -78,7 +75,6 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
 
         const response = api.sign(prepared, profileData.accSecret)
         const txID = response.id
-        txIdGlobal = txID
         console.log("Identifying hash:", txID)
         const txBlob = response.signedTransaction
         console.log("Signed blob:")

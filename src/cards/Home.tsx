@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { CircularProgress, FormControl, Input, InputAdornment, InputLabel, TextField, Typography } from '@material-ui/core';
+import { CircularProgress, FormControl, Input, InputAdornment, InputLabel, Typography } from '@material-ui/core';
 import { InputBase } from '@material-ui/core';
 import AccountApi from '../services/AccountApi';
 import LinesApi from '../services/LinesApi ';
@@ -59,7 +59,7 @@ export default function HomePaper() {
       setIsLoaded(true)
 
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   return (
