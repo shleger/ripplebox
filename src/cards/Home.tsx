@@ -5,9 +5,8 @@ import { CircularProgress, FormControl, Input, InputAdornment, InputLabel, TextF
 import { InputBase } from '@material-ui/core';
 import AccountApi from '../services/AccountApi';
 import LinesApi from '../services/LinesApi ';
-import { FormattedTrustline } from 'ripple-lib/dist/npm/common/types/objects';
-import { ValidationError } from 'ripple-lib/dist/npm/common/errors';
 import { GetBalanceSheet } from 'ripple-lib/dist/npm/ledger/balance-sheet';
+import { CurrencyLabel } from '../services/LocalService';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -66,76 +65,75 @@ export default function HomePaper() {
   return (
     <div className={classes.root} >
       { isLoaded ?
-          <Paper elevation={3} onLoadedData={() => isLoaded} >
-            <Typography variant="h5" > XRP founds</Typography>
-            <InputBase
-              className={classes.margin}
-              defaultValue="Crypto"
-              inputProps={{ 'aria-label': 'naked' }}
+        <Paper elevation={3} onLoadedData={() => isLoaded} >
+          <Typography variant="h5" > XRP founds</Typography>
+          <InputBase
+            className={classes.margin}
+            defaultValue="Crypto"
+            inputProps={{ 'aria-label': 'naked' }}
+          />
+
+
+
+          <FormControl  >
+            <InputLabel htmlFor="standard-xrp-amount">Amount</InputLabel>
+            <Input
+              id="standard-xrp-amount"
+              value={xrpBal}
+              disabled={true}
+              startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
             />
+          </FormControl>
 
 
-            <FormControl  >
-              <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
-              <Input
-                id="standard-adornment-amount1"
-                value={xrpBal}
-                disabled={true}
-                startAdornment={<InputAdornment position="start">XRP</InputAdornment>}
-              />
-            </FormControl>
-
-            <Typography variant="h5" className={classes.margin}>Lines</Typography>
-
-
-            {
-              curBal?.assets?.map((sheet, i) => (
-                <div>
-
-                  <InputBase
-                    className={classes.margin}
-                    defaultValue="Counterparty/Asset"
-                    inputProps={{ 'aria-label': 'naked' }}
+          <Typography variant="h5" className={classes.margin}>Lines</Typography>
+          {
+            curBal?.assets?.map((sheet, i) => (
+              <div>
+                <InputBase
+                  className={classes.margin}
+                  defaultValue="Counterparty/Asset"
+                  inputProps={{ 'aria-label': 'naked' }}
+                />
+                <FormControl  >
+                  <InputLabel htmlFor={"standard-asset-amount" + i}>{sheet.counterparty}</InputLabel>
+                  <Input
+                    id={"standard-asset-amount" + i}
+                    value={sheet.value}
+                    disabled={true}
+                    startAdornment={<InputAdornment position="start">{CurrencyLabel.get(sheet.currency)}</InputAdornment>}
                   />
-                  <FormControl  >
-                    <InputLabel htmlFor={"standard-adornment-amount" + i}>{sheet.counterparty}</InputLabel>
-                    <Input
-                      id={"standard-adornment-amount" + i}
-                      value={sheet.value}
-                      disabled={true}
-                      startAdornment={<InputAdornment position="start">{sheet.currency}</InputAdornment>}
-                    />
-                  </FormControl>
-                </div>
-              ))
-            }
+                </FormControl>
+              </div>
+            ))
+          }
 
 
-            {
+          {
 
-              curBal?.obligations?.map((sheet, i) => (
-                <div>
+            curBal?.obligations?.map((sheet, i) => (
+              <div>
 
-                  <InputBase
-                    className={classes.margin}
-                    defaultValue="Obligation"
-                    inputProps={{ 'aria-label': 'naked' }}
+                <InputBase
+                  className={classes.margin}
+                  defaultValue="Obligation"
+                  inputProps={{ 'aria-label': 'naked' }}
+                />
+                <FormControl  >
+                  <InputLabel htmlFor={"standard-obligations-amount" + i}>Amount</InputLabel>
+                  <Input
+                    id={"standard-obligations-amount" + i}
+                    value={sheet.value}
+                    disabled={true}
+                    startAdornment={<InputAdornment position="start">{CurrencyLabel.get(sheet.currency)}</InputAdornment>}
                   />
-                  <FormControl  >
-                    <InputLabel htmlFor={"standard-obligations-amount" + i}>Amount</InputLabel>
-                    <Input
-                      id={"standard-obligations-amount" + i}
-                      value={sheet.value}
-                      disabled={true}
-                      startAdornment={<InputAdornment position="start">{sheet.currency}</InputAdornment>}
-                    />
-                  </FormControl>
-                </div>
-              ))
-            }
+                </FormControl>
+              </div>
+            ))
+          }
 
-          </Paper>
-            : <CircularProgress />}
+        </Paper>
+        : <CircularProgress />}
     </div>
   );
 }

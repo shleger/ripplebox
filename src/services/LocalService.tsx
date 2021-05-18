@@ -14,3 +14,10 @@ export const initProfileData: ProfileData = {
     accSecret: "",
     server: "wss://s.altnet.rippletest.net:51233"
 }
+
+ export const CurrencyLabel = new Map<string, string>([
+    ['EUR', '€'],
+    ['GBP', '£'],
+    ['JPY', '¥'],
+    ['USD', '$'],
+  ]);
