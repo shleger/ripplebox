@@ -15,6 +15,7 @@ import Profile from './cards/Profile';
 import Home from './cards/Home';
 import TrustedAccounts from './cards/AccountObjects';
 import SendAssest from './cards/SendAsset';
+import Exchange from './cards/Exchange ';
 
 
 
@@ -156,10 +157,5 @@ export default function ButtonAppBar() {
       </Router>
     </div>
   );
-
-
-  function Exchange() {
-    return <h2>Exchange</h2>;
-  }
   
 }

@@ -187,6 +187,12 @@ export function RpcJsonAccountLines(storageKey: string) {
         return response
 
     }).catch(console.error)
+    //TODO
+    // .finally(()=>{
+    //     console.log("==try fin==")
+    //     api.disconnect().then(()=>console.log("==fin=="));
+    // });
+
 
     return promise
 
