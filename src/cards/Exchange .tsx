@@ -20,11 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
         width: 200,
       },
-      display: 'flex',
-      flexWrap: 'wrap',
+      // display: 'flex',
+      // flexWrap: 'wrap',
       '& > *': {
         margin: theme.spacing(1),
-        width: theme.spacing(160),
         height: theme.spacing(56),
       }
     },

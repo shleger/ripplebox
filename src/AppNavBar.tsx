@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const header = window.location.pathname.substr(1)
+  window.document.title = header? header: "RippleBox"
 
   const [state, setState] = React.useState({ selectedItem: "Home" });
 
@@ -62,7 +64,7 @@ export default function ButtonAppBar() {
 
     const value = e.currentTarget.outerText
     setState({
-      selectedItem: !value ? "Profile" : value
+      selectedItem: value === header? "Profile" : value
     });
   };
 
@@ -115,6 +117,7 @@ export default function ButtonAppBar() {
               {state.selectedItem}
             </Typography>
             <Link to="/profile" onClick={handleClose} className={classes.linkStyle} style={{ color: 'white' }}>
+              {header}
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
