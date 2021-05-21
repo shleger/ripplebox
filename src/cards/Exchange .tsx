@@ -12,6 +12,10 @@ import ExchangeApi from '../services/ExchangeApi ';
 import { CurrencyLabel } from '../services/LocalService';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { FormattedOrderSpecification } from 'ripple-lib/dist/npm/common/types/objects';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // flexWrap: 'wrap',
       '& > *': {
         margin: theme.spacing(1),
-        height: theme.spacing(56),
+        height: theme.spacing(60),
       }
     },
     inp: {
@@ -49,11 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const directions = [
   {
-    value: 'SELL',
+    value: 'sell',
     label: 'SELL',
   },
   {
-    value: 'BUY',
+    value: 'buy',
     label: 'BUY',
   }]
 
@@ -76,26 +80,59 @@ const currencies = [
   },
 ];
 export default function Exchange() {
-  const classes = useStyles();
-  const [destAccount, setDestAccount] = useState("")
-  const [issuerAccount, setIssuerAccount] = useState("")
-  const [destValue, setDestValue] = useState(0)
   const storageKey = window.location.pathname
+
+
+  const classes = useStyles();
+  const [destValueIn, setDestValueIn] = useState(0)
+  const [destValueOut, setDestValueOut] = useState(0)
   const [isLoaded, setIsLoaded] = React.useState(true);
-  const [currency, setCurrency] = React.useState('EUR');
-  const [direction, setDirection] = React.useState('SELL');
+  const [currencyIn, setCurrencyIn] = React.useState('USD');
+  const [currencyOut, setCurrencyOut] = React.useState('EUR');
+  const [direction, setDirection] = React.useState('sell');
+
+  const [state, setState] = React.useState({
+    passive: false,
+    fillOrKill: false,
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+  };
 
 
-  const sendValue = () => {
-    // setIsLoaded(false)
 
-    //   ExchangeApi(storageKey,destAccount,currency,destValue,issuerAccount)
-    //   .then(()=> setIsLoaded(true))
+  const placeOrder = () => {
+
+    const order: FormattedOrderSpecification = {
+      "direction": String(direction),
+      "quantity": {
+        "currency": currencyIn,
+        "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
+        "value": String(destValueIn)
+      },
+      "totalPrice": {
+        "currency": currencyOut,
+        "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
+        "value": String(destValueOut)
+      },
+      "passive": state.passive,
+      "fillOrKill": state.fillOrKill
+    };
+
+
+    setIsLoaded(false)
+
+    ExchangeApi(storageKey, order).then(() => setIsLoaded(true))
 
 
   }
-  const handleChangeCur = (event: any) => {
-    setCurrency(event.target.value);
+  const handleChangeCurOut = (event: any) => {
+    setCurrencyOut(event.target.value);
+  };
+
+  const handleChangeCurIn = (event: any) => {
+    setCurrencyIn(event.target.value);
   };
 
   const handleChangeDir = (event: any) => {
@@ -140,8 +177,8 @@ export default function Exchange() {
               id="standard-select-currency"
               select
               label={"Currency to " + direction}
-              value={currency}
-              onChange={handleChangeCur}
+              value={currencyOut}
+              onChange={handleChangeCurOut}
               className={classes.curr}
             // helperText="Please select your currency"
             >
@@ -152,7 +189,7 @@ export default function Exchange() {
               ))}
             </TextField>
 
-            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValue(Number(e.target.value))} value={destValue} type='number' />
+            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValueOut(Number(e.target.value))} value={destValueOut} type='number' />
 
             <Typography variant="h5" > With</Typography>
 
@@ -160,8 +197,8 @@ export default function Exchange() {
               id="standard-select2-currency"
               select
               label={"Currency"}
-              value={currency}
-              onChange={handleChangeCur}
+              value={currencyIn}
+              onChange={handleChangeCurIn}
               className={classes.curr}
             // helperText="Please select your currency"
             >
@@ -172,18 +209,38 @@ export default function Exchange() {
               ))}
             </TextField>
 
-            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValue(Number(e.target.value))} value={destValue} type='number' />
+            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValueIn(Number(e.target.value))} value={destValueIn} type='number' />
 
+            <FormGroup row>
+              <FormControlLabel
+                control={<Switch
+                  checked={state.fillOrKill}
+                  onChange={handleChange}
+                  color="primary"
+                  name="fillOrKill" />}
+                label="FillOrKill"
+              />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={state.passive}
+                    onChange={handleChange}
+                    name="passive"
+                    color="primary"
+                  />
+                }
+                label="Passive"
+              />
+            </FormGroup>
 
-            
 
             <Button
               variant="contained"
               color="primary"
               size="large"
               //just for sure
-              onClick={sendValue}
-              className={classes.button}
+              onClick={placeOrder}
+              // className={classes.button}
               startIcon={<SupervisorAccountIcon />}
             >
               Place order

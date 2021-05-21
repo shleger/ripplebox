@@ -1,49 +1,77 @@
 import { RippleAPI } from "ripple-lib";
+import { FormattedOrderSpecification } from "ripple-lib/dist/npm/common/types/objects";
 
-export default function LinesApi(storageKey: string) {
-    
+export default function ExchangeApi(storageKey: string, order: FormattedOrderSpecification) {
+
+    console.log("Place order: " + JSON.stringify(order))
+
     const pd = localStorage.getItem(storageKey)
     if (pd == null) {
-        throw new Error("Not found creds for LinesApi")
+        throw new Error("Not found creds")
     }
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
-    api.on('error', (errorCode, errorMessage) => {
-        console.log(errorCode + ': ' + errorMessage);
-    });
-    api.on('connected', () => {
-        console.log('==connected==');
-    });
-    api.on('disconnected', (code) => {
-        // code - [close code](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent) sent by the server
-        // will be 1000 if this was normal closure
-        if (code !== 1000) {
-            console.log('Connection is closed due to error: ' + code);
-        } else {
-            console.log('==connection is closed normally==: ' + code);
-        }
-    });
+    async function doPrepare() {
 
-    console.log('Connect to ' + profileData.server )
+        const preparedTx = await api.prepareOrder(profileData.accAddress, order)
+        const maxLedgerVersion = preparedTx.instructions.maxLedgerVersion
+        console.log("Prepared transaction instructions:", preparedTx.txJSON)
+        console.log("Transaction cost:", preparedTx.instructions.fee, "XRP")
+        console.log("Transaction expires after ledger:", maxLedgerVersion)
+        return preparedTx.txJSON
+    }
+
+    // use txBlob from the previous example
+    async function doSubmit(txBlob: any) {
+        const latestLedgerVersion = await api.getLedgerVersion()
+
+        const result = await api.submit(txBlob)
+
+
+        console.log("Tentative result code:", result.resultCode)
+        console.log("Tentative result message:", result.resultMessage)
+
+        // Return the earliest ledger index this transaction could appear in
+        // as a result of this submission, which is the first one after the
+        // validated ledger at time of submission.
+        return latestLedgerVersion + 1
+    }
+
 
     const promise = api.connect().then(() => {
-        console.log('Connected')
+        console.log('Connected');
+        return doPrepare()
+    }).then(prepared => {
+        console.log('Order Prepared: ' + prepared);
 
-        return api.getBalanceSheet(profileData.accAddress)
-    }).then(response => {
-        console.log("account_lines response:", JSON.stringify(response))
-        return response
-    }).then((response) => {
-        api.disconnect()
-        // .then(() => {
-        //     console.log('Disconnected')
-        //     process.exit()
-        // })
-        return response
-    }).catch(console.error)
+        const response = api.sign(prepared, profileData.accSecret)
+        const txID = response.id
+        console.log("Identifying hash:", txID)
+        const txBlob = response.signedTransaction
+        console.log("Signed blob:")
+
+        return txBlob;
+    }).then(blob => {
+        console.log('Order Prepared' + blob);
+        return doSubmit(blob);
+    }).then((ladgerNumber) => {
+        console.log('ledgerNumber: ', ladgerNumber);
+        return api.on('ledger', ledger => {
+            console.log("Ledger version", ledger.ledgerVersion, "was validated??.")
+            if (ledger.ledgerVersion > ledger.maxLedgerVersion) {
+                console.log("If the transaction hasn't succeeded by now, it's expired")
+            }
+        })
+    }).then((validated) => {
+        console.log('validated');
+        //TODO return getTran(txIdGlobal)
+    }).then(() => {
+        return api.disconnect()
+    }).catch(console.error);
 
     return promise
 
-}
+    //--- end main ----
 
+}
