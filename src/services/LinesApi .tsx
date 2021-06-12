@@ -40,7 +40,7 @@ export function CreateTrustLineApi(storageKey: string, dest: string, trustCurren
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
-    console.log("Reciever address: {0}, currncy ={1}", dest, trustCurrency)
+    console.log("CreateTrustLineApi: ", dest, trustCurrency, limit, qualityIn, qualityOut)
 
     async function doPrepare() {
         const trustLine = {

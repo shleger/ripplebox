@@ -105,14 +105,14 @@ export default function ButtonAppBar() {
               <Link to="/accounts" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Account Lines</MenuItem>
               </Link>
+              <Link to="/orders" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Account Objects</MenuItem>
+              </Link>
               <Link to="/send" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Send </MenuItem>
               </Link>
               <Link to="/exchange" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Exchange</MenuItem>
-              </Link>
-              <Link to="/orders" className={classes.linkStyle}>
-                <MenuItem onClick={handleClose}>Exchange Orders</MenuItem>
               </Link>
               <Link to="/" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Home</MenuItem>

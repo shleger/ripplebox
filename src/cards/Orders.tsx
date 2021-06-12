@@ -131,7 +131,7 @@ export default function Orders() {
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
-        <Typography variant="h5" >Exchange Orders</Typography>
+        <Typography variant="h5" >Account Objects</Typography>
         <DataGrid
           loading={isLoading}
           disableColumnMenu={true}

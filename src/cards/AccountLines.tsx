@@ -88,7 +88,7 @@ export default function AccountLines() {
   return (
     <div className={classes.root} >
       <Paper elevation={3} >
-        <Typography variant="h5" >Account objects</Typography>
+        <Typography variant="h5" >Account Lines</Typography>
         <DataGrid
           loading={isLoading}
           disableColumnMenu={true}
