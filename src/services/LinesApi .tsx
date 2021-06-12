@@ -31,7 +31,7 @@ export default function LinesApi(storageKey: string) {
 }
 
 //https://testnet.xrpl.org/ --see explorer
-export function CreateTrustLineApi(storageKey: string, dest: string) {
+export function CreateTrustLineApi(storageKey: string, dest: string, trustCurrency:string) {
 
     const pd = localStorage.getItem(storageKey)
     if (pd == null) {
@@ -40,12 +40,11 @@ export function CreateTrustLineApi(storageKey: string, dest: string) {
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
-    console.log("Reciever address: {}", dest)
+    console.log("Reciever address: {}, currncy ={}", dest, trustCurrency)
 
     async function doPrepare() {
         const trustLine = {
-            "currency": "USD",
-            // "currency": "EUR",
+            "currency": trustCurrency,
             "counterparty": dest,
             "limit": "100",
             // "qualityIn": 0.91,
@@ -60,6 +59,7 @@ export function CreateTrustLineApi(storageKey: string, dest: string) {
                 }
             ]
         };
+
         const preparedTx = await api.prepareTrustline(profileData.accAddress, trustLine);
         const maxLedgerVersion = preparedTx.instructions.maxLedgerVersion
         console.log("Prepared transaction instructions:", preparedTx.txJSON)

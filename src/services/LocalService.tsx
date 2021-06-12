@@ -21,3 +21,32 @@ export const initProfileData: ProfileData = {
     ['JPY', '¥'],
     ['USD', '$'],
   ]);
+
+  export const directions = [
+    {
+      value: 'sell',
+      label: 'SELL',
+    },
+    {
+      value: 'buy',
+      label: 'BUY',
+    }]
+  
+  export const currencies = [
+    {
+      value: 'EUR',
+      label: '€',
+    },
+    {
+      value: 'GBP',
+      label: '£',
+    },
+    {
+      value: 'USD',
+      label: '$',
+    },
+    {
+      value: 'JPY',
+      label: '¥',
+    },
+  ];

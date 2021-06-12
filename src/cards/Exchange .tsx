@@ -5,13 +5,10 @@ import { FormControl, Input, InputAdornment, InputBase, InputLabel, MenuItem, Ty
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Alert from '@material-ui/lab/Alert'
-import SendApi from '../services/SendApi';
 import ExchangeApi from '../services/ExchangeApi ';
-import { CurrencyLabel } from '../services/LocalService';
+import { currencies, CurrencyLabel, directions } from '../services/LocalService';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import ImportExportIcon from '@material-ui/icons/ImportExport';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -51,34 +48,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const directions = [
-  {
-    value: 'sell',
-    label: 'SELL',
-  },
-  {
-    value: 'buy',
-    label: 'BUY',
-  }]
-
-const currencies = [
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'GBP',
-    label: '£',
-  },
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
 export default function Exchange() {
   const storageKey = window.location.pathname
 
@@ -103,6 +72,7 @@ export default function Exchange() {
 
 
   const placeOrder = () => {
+
 
     const order: FormattedOrderSpecification = {
       "direction": direction,
