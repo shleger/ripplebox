@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // flexWrap: 'wrap',
       '& > *': {
         margin: theme.spacing(1),
-        height: theme.spacing(60),
+        height: theme.spacing(50),
       }
     },
     inp: {
@@ -56,6 +56,7 @@ export default function Exchange() {
   const [destValueIn, setDestValueIn] = useState(0)
   const [destValueOut, setDestValueOut] = useState(0)
   const [isLoaded, setIsLoaded] = React.useState(true);
+  const [isAlerted, setIsAlerted] = React.useState(false);
   const [currencyIn, setCurrencyIn] = React.useState('USD');
   const [currencyOut, setCurrencyOut] = React.useState('EUR');
   const [direction, setDirection] = React.useState('sell');
@@ -93,7 +94,7 @@ export default function Exchange() {
 
     setIsLoaded(false)
 
-    ExchangeApi(storageKey, order).then(() => setIsLoaded(true))
+    ExchangeApi(storageKey, order).then(() => {setIsLoaded(true);setIsAlerted(true)})
 
 
   }
@@ -112,10 +113,7 @@ export default function Exchange() {
   return (
     <div className={classes.root} >
       {isLoaded ? <Paper elevation={3} >
-        <Typography variant="h5">Exchange Asset</Typography>
-        <Alert severity="info">This is an info|error alert — check it out!</Alert>
-
-        <Typography variant="h5" > Place order</Typography>
+         {isAlerted ? <Alert severity="info">Order placed</Alert>: <Typography variant="h5">Exchange Asset</Typography>}
         <form noValidate autoComplete="off">
 
           <InputBase
