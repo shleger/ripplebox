@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       margin: theme.spacing(1),
-      marginTop: theme.spacing(5)
+      marginTop: theme.spacing(1)
     },
   }),
 );
@@ -66,6 +66,7 @@ export default function SendAssest() {
   const [destValue, setDestValue] = useState(0)
   const storageKey = window.location.pathname
   const [isLoaded, setIsLoaded] = React.useState(true);
+  const [isAlerted, setIsAlerted] = React.useState(false);
   const [currency, setCurrency] = React.useState('EUR');
 
 
@@ -73,7 +74,7 @@ export default function SendAssest() {
     setIsLoaded(false)
 
       SendApi(storageKey,destAccount,currency,destValue,issuerAccount)
-      .then(()=> setIsLoaded(true))
+      .then(()=> {setIsLoaded(true);setIsAlerted(true)})
 
 
   }
@@ -83,9 +84,8 @@ export default function SendAssest() {
 
   return (
     <div className={classes.root} >
-      {isLoaded ? <Paper elevation={3} >
-        <Typography variant="h5">Send  Asset</Typography>
-        <Alert severity="info">This is an info|error alert — check it out!</Alert>
+      {isLoaded ? <Paper elevation={3} >        
+        {isAlerted ?<Alert severity="info">Asset value sent</Alert>:<Typography variant="h5">Send Asset</Typography>}
 
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} value={destAccount} />

@@ -9,6 +9,7 @@ import { CreateTrustLineApi } from '../services/LinesApi ';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import { currencies } from '../services/LocalService';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,10 +48,12 @@ export default function TrustLines() {
 
   const storageKey = window.location.pathname
   const [isLoaded, setIsLoaded] = React.useState(true);
+  const [isAlerted, setIsAlerted] = React.useState(false);
 
   const createTrustLine = () => {
     setIsLoaded(false)
-    CreateTrustLineApi(storageKey, trustAccount,trustCurrency,limit,qualityIn,qualityOut).then(() => setIsLoaded(true))
+    CreateTrustLineApi(storageKey, trustAccount,trustCurrency,limit,qualityIn,qualityOut)
+    .then(() => {setIsLoaded(true) ; setIsAlerted(true)})
   }
 
   const handleTrustCurrency= (event: any) => {
@@ -61,7 +64,8 @@ export default function TrustLines() {
   return (
     <div className={classes.root} >
       {isLoaded ? <Paper elevation={3} >
-        <Typography variant="h5">Create TrustLine</Typography>
+        {isAlerted ?<Alert severity="info">TrustLine created</Alert>:<Typography variant="h5">Create TrustLine</Typography>}
+
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Trusted account" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
           
