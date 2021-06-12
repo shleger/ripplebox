@@ -6,6 +6,7 @@ import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { AccountObjects } from '../services/AccountApi';
 import { Amount, OfferLedgerEntry, RippledAmount } from 'ripple-lib/dist/npm/common/types/objects';
 import { AccountObjectsResponse } from 'ripple-lib';
+import { CurrencyLabel } from '../services/LocalService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,43 +31,37 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'id', width: 50, hide: false },
-  { field: 'Account', headerName: 'Account', width: 130 },
-  { field: 'balance', headerName: 'Bal', description: 'Balance', width: 60 },
-  { field: 'currency', headerName: '¥€$', description: 'Currency', width: 60 },
-  { field: 'no_ripple', description: 'Flag: no_ripple', headerName: 'no_ripple', type: 'boolean', width: 90 },
-  { field: 'no_ripple_peer', description: 'Flag: no_ripple_peer', headerName: 'no_ripple_peer', type: 'boolean', width: 130 },
-  { field: 'limit', description: 'Limit', headerName: 'lim', type: 'number', width: 60 },
-  { field: 'limit_peer', description: 'Flag: limit_peer', headerName: 'lim_peer', type: 'number', width: 90 },
-  { field: 'quality_in', headerName: 'quality_in', type: 'number', width: 90 },
-  { field: 'quality_out', headerName: 'quality_out', type: 'number', width: 90 },
+  { field: 'type', headerName: 'Type', description: 'Type', type: 'number', width: 70 },
+  { field: 'takerGets', headerName: 'Gets', description: 'TakerGets', width: 90 },
+  { field: 'takerPays', description: 'TakerPays', headerName: 'Pays',  width: 90 },
+  { field: 'sequence', headerName: 'Sequence', type: 'number', width: 100 },
+  { field: 'issuerGets', description: 'IssuerGets', headerName: 'IssuerGets',width: 130 },
+  { field: 'issuerPays', description: 'IssuerPays', headerName: 'IssuerPays',width: 130 },
+  { field: 'previousTxnID', description: 'PreviousTxnID', headerName: 'PreviousTxnID', width: 600 },
 ];
 
 
 interface AccountObjectsTable {
   id: number,
-  account: string,
-  balance: string,
-  currency: string,
-  limit: string,
-  limit_peer: string,
-  no_ripple: boolean,
-  no_ripple_peer: boolean,
-  quality_in: number,
-  quality_out: number
+  sequence: number,
+  type: string,
+  takerGets: string,
+  takerPays: string,
+  issuerGets?:string,
+  issuerPays?:string,
+  previousTxnID: string,
 }
 
 const rowsInit : Array<AccountObjectsTable> = [
   {
     id: 1,
-    account: "",
-    balance: "",
-    currency: "",
-    limit: "",
-    limit_peer: "",
-    no_ripple: true,
-    no_ripple_peer: true,
-    quality_in: 0,
-    quality_out: 0
+    sequence: 0,
+    type: "",
+    takerGets: "",
+    takerPays: "",
+    issuerGets:"",
+    issuerPays:"",
+    previousTxnID: "",
   }
 ]
 
@@ -95,26 +90,32 @@ export default function Orders() {
             let f: OfferLedgerEntry = (p as OfferLedgerEntry)
 
             let a: AccountObjectsTable = {
-              id: 1,
-              account: "",
-              balance: "",
-              currency: "",
-              limit: "",
-              limit_peer: "",
-              no_ripple: true,
-              no_ripple_peer: true,
-              quality_in: 0,
-              quality_out: 0
-            };
+                id: -1,
+                sequence: -1,
+                type: "",
+                takerGets: "",
+                takerPays: "",
+                issuerGets:"",
+                issuerPays:"",
+                previousTxnID: "",
+              };
 
             a.id = i++
-            a.account = f.Account
-            a.balance = ((f.TakerPays as RippledAmount) as Amount).value
+            a.sequence = f.Sequence
+            a.type = f.LedgerEntryType
+           
+            const amountGet = ((f.TakerGets as RippledAmount) as Amount)
+            const amountPays = ((f.TakerPays as RippledAmount) as Amount)
+           
+            a.takerGets = CurrencyLabel.get(amountGet.currency) +  amountGet.value 
+            a.takerPays = CurrencyLabel.get(amountPays.currency) + amountPays.value
+           
+            a.issuerGets = amountGet.issuer
+            a.issuerPays = amountPays.issuer
+
+            a.previousTxnID = f.PreviousTxnID
+
             rowsAct.push(a)
-
-            console.log("Inside OfferLedgerEntry: " + JSON.stringify((f)))
-
-  
           }
 
           console.log("rowsAct pushed: " + JSON.stringify((rowsAct)))
