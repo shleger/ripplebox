@@ -16,6 +16,7 @@ import Home from './cards/Home';
 import TrustedAccounts from './cards/AccountLines';
 import SendAssest from './cards/SendAsset';
 import Exchange from './cards/Exchange ';
+import Orders from './cards/Orders';
 
 
 
@@ -110,6 +111,9 @@ export default function ButtonAppBar() {
               <Link to="/exchange" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Exchange</MenuItem>
               </Link>
+              <Link to="/orders" className={classes.linkStyle}>
+                <MenuItem onClick={handleClose}>Exchange Orders</MenuItem>
+              </Link>
               <Link to="/" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Home</MenuItem>
               </Link>
@@ -149,6 +153,10 @@ export default function ButtonAppBar() {
 
           <Route path="/exchange">
             <Exchange />
+          </Route>
+
+          <Route path="/orders">
+            <Orders />
           </Route>
 
           <Route path="/">
