@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import { FormControl, Input, InputAdornment, InputBase, InputLabel, MenuItem, Typography } from '@material-ui/core';
+import { FormControl, InputBase, MenuItem, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert'
 import ExchangeApi from '../services/ExchangeApi ';
-import { currencies, CurrencyLabel, directions } from '../services/LocalService';
+import { currencies, directions } from '../services/LocalService';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'id', width: 50, hide: false },
-  { field: 'type', headerName: 'Type', description: 'Type', type: 'number', width: 70 },
+  { field: 'type', headerName: 'Type', description: 'LedgerEntryType', type: 'number', width: 70 },
   { field: 'takerGets', headerName: 'Gets', description: 'TakerGets', width: 90 },
   { field: 'takerPays', description: 'TakerPays', headerName: 'Pays',  width: 90 },
-  { field: 'sequence', headerName: 'Sequence', type: 'number', width: 100 },
+  { field: 'sequence', headerName: 'Sequence', description:"Sequence", width: 100 },
   { field: 'issuerGets', description: 'IssuerGets', headerName: 'IssuerGets',width: 130 },
   { field: 'issuerPays', description: 'IssuerPays', headerName: 'IssuerPays',width: 130 },
   { field: 'previousTxnID', description: 'PreviousTxnID', headerName: 'PreviousTxnID', width: 600 },
@@ -52,18 +52,7 @@ interface AccountObjectsTable {
   previousTxnID: string,
 }
 
-const rowsInit : Array<AccountObjectsTable> = [
-  {
-    id: 1,
-    sequence: 0,
-    type: "",
-    takerGets: "",
-    takerPays: "",
-    issuerGets:"",
-    issuerPays:"",
-    previousTxnID: "",
-  }
-]
+const rowsInit : Array<AccountObjectsTable> = []
 
 
 

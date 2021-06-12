@@ -1,5 +1,4 @@
 import { AccountObjectsResponse, RippleAPI } from "ripple-lib";
-import { OfferLedgerEntry } from "ripple-lib/dist/npm/common/types/objects";
 import { FormattedGetAccountInfoResponse } from "ripple-lib/dist/npm/ledger/accountinfo";
 
 
