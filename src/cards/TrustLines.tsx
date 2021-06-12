@@ -27,9 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '50ch',
       },
     },
+    qualityInOut: {
+      width: theme.spacing(26),
+    },
     button: {
       margin: theme.spacing(1),
-      marginTop: theme.spacing(10)
+      marginTop: theme.spacing(5)
     },
   }),
 );
@@ -37,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function TrustLines() {
   const classes = useStyles();
   const [trustAccount, setTrustAccount] = useState("")
+  const [limit, setLimit] = useState("100")
+  const [qualityIn, setQualityIn] = useState(0.91)
+  const [qualityOut, setQualityOut] = useState(0.17)
   const [trustCurrency, setTrustCurrency] = React.useState('EUR');
 
   const storageKey = window.location.pathname
@@ -44,7 +50,7 @@ export default function TrustLines() {
 
   const createTrustLine = () => {
     setIsLoaded(false)
-    CreateTrustLineApi(storageKey, trustAccount,trustCurrency).then(() => setIsLoaded(true))
+    CreateTrustLineApi(storageKey, trustAccount,trustCurrency,limit,qualityIn,qualityOut).then(() => setIsLoaded(true))
   }
 
   const handleTrustCurrency= (event: any) => {
@@ -74,6 +80,11 @@ export default function TrustLines() {
                 </MenuItem>
               ))}
             </TextField>
+          
+          <TextField id="standard-basic1" label="Limit" onChange={(e) => setLimit(e.target.value)} value={limit} />
+          <TextField id="standard-basic2" className= {classes.qualityInOut} label="Quality In" onChange={(e) => setQualityIn(Number(e.target.value))} value={qualityIn} />
+          <TextField id="standard-basic3"  className= {classes.qualityInOut} label="Quality Out" onChange={(e) => setQualityOut(Number(e.target.value))} value={qualityOut} />
+
           
           <Button
             variant="contained"

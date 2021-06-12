@@ -31,7 +31,7 @@ export default function LinesApi(storageKey: string) {
 }
 
 //https://testnet.xrpl.org/ --see explorer
-export function CreateTrustLineApi(storageKey: string, dest: string, trustCurrency:string) {
+export function CreateTrustLineApi(storageKey: string, dest: string, trustCurrency:string, limit: string, qualityIn?:number, qualityOut?:number) {
 
     const pd = localStorage.getItem(storageKey)
     if (pd == null) {
@@ -40,13 +40,15 @@ export function CreateTrustLineApi(storageKey: string, dest: string, trustCurren
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
-    console.log("Reciever address: {}, currncy ={}", dest, trustCurrency)
+    console.log("Reciever address: {0}, currncy ={1}", dest, trustCurrency)
 
     async function doPrepare() {
         const trustLine = {
             "currency": trustCurrency,
             "counterparty": dest,
-            "limit": "100",
+            "limit": limit,
+            "qualityIn": qualityIn,
+            "qualityOut": qualityOut,
             // "qualityIn": 0.91,
             // "qualityOut": 0.87,
             "ripplingDisabled": false,
