@@ -7,11 +7,13 @@ import AppRouter from './AppNavBar';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
+  // findDOMNode is deprecated in StrictMode. ((, so comment
+  // <React.StrictMode>  
     <div>
     <AppRouter />
     </div>
-  </React.StrictMode>,
+  // </React.StrictMode>
+  ,
   document.getElementById('root')
 );
 
