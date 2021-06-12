@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import TrustLines from "./cards/TrustLines"
 import Profile from './cards/Profile';
 import Home from './cards/Home';
-import TrustedAccounts from './cards/AccountObjects';
+import TrustedAccounts from './cards/AccountLines';
 import SendAssest from './cards/SendAsset';
 import Exchange from './cards/Exchange ';
 
@@ -102,7 +102,7 @@ export default function ButtonAppBar() {
                 <MenuItem onClick={handleClose}>Create TrustLine</MenuItem>
               </Link>
               <Link to="/accounts" className={classes.linkStyle}>
-                <MenuItem onClick={handleClose}>Account objects</MenuItem>
+                <MenuItem onClick={handleClose}>Account Lines</MenuItem>
               </Link>
               <Link to="/send" className={classes.linkStyle}>
                 <MenuItem onClick={handleClose}>Send </MenuItem>

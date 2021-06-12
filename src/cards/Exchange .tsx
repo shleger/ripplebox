@@ -105,7 +105,7 @@ export default function Exchange() {
   const placeOrder = () => {
 
     const order: FormattedOrderSpecification = {
-      "direction": String(direction),
+      "direction": direction,
       "quantity": {
         "currency": currencyIn,
         "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
