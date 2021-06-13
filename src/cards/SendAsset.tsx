@@ -67,36 +67,35 @@ export default function SendAssest() {
   const storageKey = window.location.pathname
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [isAlerted, setIsAlerted] = React.useState(false);
-  const [isXrpSelected, setIsXrpSelected] = React.useState(false); 
+  const [isXrpSelected, setIsXrpSelected] = React.useState(false);
   const [currency, setCurrency] = React.useState('EUR');
 
 
   const sendValue = () => {
     setIsLoaded(false)
 
-      SendApi(storageKey,destAccount,currency,destValue,issuerAccount)
-      .then(()=> {setIsLoaded(true);setIsAlerted(true)})
+    SendApi(storageKey, destAccount, currency, destValue, issuerAccount)
+      .then(() => { setIsLoaded(true); setIsAlerted(true) })
 
 
   }
   const handleChange = (event: any) => {
     const curr = event.target.value
-    setCurrency(event.target.value);
-    if(curr === 'XRP'){
-      setIsXrpSelected(true)
-    }else{
-      setIsXrpSelected(false)
-    }
+    setCurrency(curr);
+    curr === 'XRP' ? setIsXrpSelected(true) : setIsXrpSelected(false)
+
   };
 
   return (
     <div className={classes.root} >
-      {isLoaded ? <Paper elevation={3} >        
-        {isAlerted ?<Alert severity="info">Asset value sent</Alert>:<Typography variant="h5">Send Asset</Typography>}
+      {isLoaded ? <Paper elevation={3} >
+        {isAlerted ? <Alert severity="info">Asset value sent</Alert> : <Typography variant="h5">Send Asset</Typography>}
 
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} value={destAccount} />
-          {isXrpSelected ?"":<TextField id="standard-basic" label="Issuer account" onChange={(e) => setIssuerAccount(e.target.value)} value={issuerAccount} />}
+          <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} 
+          value={destAccount} />
+          <TextField id="standard-basic" label="Issuer account" onChange={(e) => setIssuerAccount(e.target.value)} 
+          value={issuerAccount} disabled={isXrpSelected}/>
           <TextField
             id="standard-select-currency"
             select
