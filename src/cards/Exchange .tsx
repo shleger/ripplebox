@@ -175,7 +175,7 @@ export default function Exchange() {
               ))}
             </TextField>
 
-            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValueOut(Number(e.target.value))} value={destValueOut} type='number' />
+            <TextField id="standard-basic12" label="Amount of value" onChange={(e) => setDestValueOut(Number(e.target.value))} value={destValueOut} type='number' />
 
             <Typography variant="h5" > With</Typography>
 
@@ -195,7 +195,7 @@ export default function Exchange() {
               ))}
             </TextField>
 
-            <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValueIn(Number(e.target.value))} value={destValueIn} type='number' />
+            <TextField id="standard-basic13" label="Amount of value" onChange={(e) => setDestValueIn(Number(e.target.value))} value={destValueIn} type='number' />
 
             <FormGroup row>
               <FormControlLabel

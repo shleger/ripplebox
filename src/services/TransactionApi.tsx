@@ -5,8 +5,8 @@ import { FormattedSubmitResponse } from "ripple-lib/dist/npm/transaction/submit"
 // use txBlob from the previous example
 async function doSubmit(txBlob: any, api: RippleAPI): Promise<FormattedSubmitResponse> {
 
-  const fee = '12'
-  const maxLedgerVersionOffset = 5
+  // const fee = '12'
+  // const maxLedgerVersionOffset = 5
   const latestLedgerVersion = await api.getLedgerVersion()
 
   const result = await api.submit(txBlob)

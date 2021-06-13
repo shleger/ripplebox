@@ -109,9 +109,9 @@ export default function SendAssest() {
         {isAlerted  && opResult ? <Alert className={classes.alerting} severity={opResult.level}> [{opResult.response.resultCode}] {opResult.response.resultMessage}</Alert> : <Typography variant="h5">Send Asset</Typography>}
 
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} 
+          <TextField id="standard-basic17" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} 
           value={destAccount} />
-          <TextField id="standard-basic" label={ isXrpSelected ? " " : "Issuer account"} onChange={(e) => setIssuerAccount(e.target.value)} 
+          <TextField id="standard-basic18" label={ isXrpSelected ? " " : "Issuer account"} onChange={(e) => setIssuerAccount(e.target.value)} 
           value={issuerAccount} disabled={isXrpSelected}/>
           <TextField
             id="standard-select-currency"
@@ -129,7 +129,7 @@ export default function SendAssest() {
             ))}
           </TextField>
 
-          <TextField id="standard-basic" label="Amount of value" onChange={(e) => setDestValue(Number(e.target.value))} value={destValue} type='number' />
+          <TextField id="standard-basic19" label="Amount of value" onChange={(e) => setDestValue(Number(e.target.value))} value={destValue} type='number' />
 
           <Button
             variant="contained"

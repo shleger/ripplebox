@@ -63,10 +63,10 @@ export default function SimplePaper() {
       <Paper elevation={3} >
         <Typography variant="h5" gutterBottom>Testnet credentials</Typography>
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Name" onChange={(e) => setProfileData({ ...profileData, accUser: e.target.value })} value={profileData?.accUser} />
-          <TextField id="standard-basic" label="Account address" onChange={(e) => setProfileData({ ...profileData, accAddress: e.target.value })} value={profileData?.accAddress} />
+          <TextField id="standard-basic14" label="Name" onChange={(e) => setProfileData({ ...profileData, accUser: e.target.value })} value={profileData?.accUser} />
+          <TextField id="standard-basic15" label="Account address" onChange={(e) => setProfileData({ ...profileData, accAddress: e.target.value })} value={profileData?.accAddress} />
           <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setProfileData({ ...profileData, accSecret: e.target.value })} value={profileData?.accSecret} />
-          <TextField id="standard-basic" label="Server" onChange={(e) => setProfileData({ ...profileData, server: e.target.value })} value={profileData?.server} />
+          <TextField id="standard-basic16" label="Server" onChange={(e) => setProfileData({ ...profileData, server: e.target.value })} value={profileData?.server} />
 
           <Button
             variant="contained"

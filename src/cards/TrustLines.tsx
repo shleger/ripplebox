@@ -67,7 +67,7 @@ export default function TrustLines() {
         {isAlerted ?<Alert severity="info">TrustLine created</Alert>:<Typography variant="h5">Create TrustLine</Typography>}
 
         <form className={classes.inp} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Trusted account" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
+          <TextField id="standard-basic20" label="Trusted account" onChange={(e) => setTrustAccount(e.target.value)} value={trustAccount} />
           
           <TextField
               id="standard-select-currency"
