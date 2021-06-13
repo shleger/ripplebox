@@ -1,5 +1,6 @@
-import { RippleAPI, TransactionJSON } from "ripple-lib";
+import { Prepare, RippleAPI, TransactionJSON } from "ripple-lib";
 import { FormattedSubmitResponse } from "ripple-lib/dist/npm/transaction/submit";
+import { rippleTx } from "./TransactionApi";
 
 export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount: string) {
     const pd = localStorage.getItem(storageKey)
@@ -14,8 +15,10 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
 
     console.log("Reciever address: {}", dest)
 
-    async function doPrepare() {
+    async function doPrepare(): Promise<Prepare> {
         let payload:TransactionJSON;
+        console.log("isConected: {} " ,api.isConnected())
+
 
         if (currency !== 'XRP') {
             payload = {
@@ -42,6 +45,9 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
 
         }
 
+
+        console.log("Payload: {} ", payload)
+
         const preparedTx = await api.prepareTransaction(payload, {
             // Expire this transaction if it doesn't execute within ~5 minutes:
             "maxLedgerVersionOffset": maxLedgerVersionOffset
@@ -50,8 +56,14 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
         console.log("Prepared transaction instructions:", preparedTx.txJSON)
         console.log("Transaction cost:", preparedTx.instructions.fee, "XRP")
         console.log("Transaction expires after ledger:", maxLedgerVersion)
-        return preparedTx.txJSON
+        return preparedTx
     }
+
+
+
+    // if(true){
+    //     return rippleTx(apiInit, profileData, doPrepare(apiInit))
+    // }
 
     // use txBlob from the previous example
     async function doSubmit(txBlob: any) : Promise<FormattedSubmitResponse>{
@@ -78,7 +90,7 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
     }).then(prepared => {
         console.log('Order Prepared: ' + prepared);
 
-        const response = api.sign(prepared, profileData.accSecret)
+        const response = api.sign(prepared.txJSON, profileData.accSecret)
         const txID = response.id
         console.log("Identifying hash:", txID)
         const txBlob = response.signedTransaction

@@ -1,3 +1,6 @@
+import { Color } from "@material-ui/lab/Alert";
+import { FormattedSubmitResponse } from "ripple-lib/dist/npm/transaction/submit";
+
 export default function LocalServiceSave(obj: any) {
 
 }
@@ -52,4 +55,11 @@ export const initProfileData: ProfileData = {
   ];
 
   export  const logClickCell = (p:any) => console.log(p.value)
+
+  export interface Alertable{
+    level:Color,
+    response: FormattedSubmitResponse
+  }
+
+  
    

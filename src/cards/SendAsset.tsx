@@ -9,6 +9,7 @@ import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import Alert, { Color } from '@material-ui/lab/Alert'
 import SendApi from '../services/SendApi';
 import { FormattedSubmitResponse } from 'ripple-lib/dist/npm/transaction/submit';
+import { Alertable } from '../services/LocalService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,11 +65,6 @@ const currencies = [
   },
 ];
 
-interface Alertable{
-  level:Color,
-  response: FormattedSubmitResponse
-}
-
 const initOpResult: Alertable = {level:"info", response:{resultCode:"",resultMessage:""}};
 export default function SendAssest() {
   const classes = useStyles();
@@ -89,7 +85,7 @@ export default function SendAssest() {
     SendApi(storageKey, destAccount, currency, destValue, issuerAccount)
       .then((res) => { setIsLoaded(true); setIsAlerted(true); setOpResult({level:"info", response: (res as FormattedSubmitResponse)}) })
       .catch((err) => {
-        
+
         console.error(err)
         setIsLoaded(true); 
         setIsAlerted(true)
@@ -115,7 +111,7 @@ export default function SendAssest() {
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} 
           value={destAccount} />
-          <TextField id="standard-basic" label="Issuer account" onChange={(e) => setIssuerAccount(e.target.value)} 
+          <TextField id="standard-basic" label={ isXrpSelected ? " " : "Issuer account"} onChange={(e) => setIssuerAccount(e.target.value)} 
           value={issuerAccount} disabled={isXrpSelected}/>
           <TextField
             id="standard-select-currency"

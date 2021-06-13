@@ -7,12 +7,13 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert'
 import ExchangeApi from '../services/ExchangeApi ';
-import { currencies, directions } from '../services/LocalService';
+import { Alertable, currencies, directions } from '../services/LocalService';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { FormattedOrderSpecification } from 'ripple-lib/dist/npm/common/types/objects';
+import { FormattedSubmitResponse } from 'ripple-lib/dist/npm/transaction/submit';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,12 +45,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     margin: {
       marginTop: '12px'
+    },
+    alerting:{
+      fontSize:'13px'
     }
   }),
 );
 
 export default function Exchange() {
   const storageKey = window.location.pathname
+  const initOpResult: Alertable = {level:"info", response:{resultCode:"",resultMessage:""}};
+
 
 
   const classes = useStyles();
@@ -60,6 +66,8 @@ export default function Exchange() {
   const [currencyIn, setCurrencyIn] = React.useState('USD');
   const [currencyOut, setCurrencyOut] = React.useState('EUR');
   const [direction, setDirection] = React.useState('sell');
+  const [opResult, setOpResult] = useState(initOpResult)
+
 
   const [state, setState] = React.useState({
     passive: false,
@@ -94,7 +102,16 @@ export default function Exchange() {
 
     setIsLoaded(false)
 
-    ExchangeApi(storageKey, order).then(() => {setIsLoaded(true);setIsAlerted(true)})
+    ExchangeApi(storageKey, order)
+    .then((res) => { setIsLoaded(true); setIsAlerted(true); setOpResult({level:"info", response: (res as FormattedSubmitResponse)}) })
+    .catch((err) => {
+
+      console.error(err)
+      setIsLoaded(true); 
+      setIsAlerted(true)
+      setOpResult({level:"error", response:{resultCode:"System",resultMessage:String(err).substr(0,200)}})
+
+    })
 
 
   }
@@ -113,7 +130,8 @@ export default function Exchange() {
   return (
     <div className={classes.root} >
       {isLoaded ? <Paper elevation={3} >
-         {isAlerted ? <Alert severity="info">Order placed</Alert>: <Typography variant="h5">Exchange Asset</Typography>}
+        {isAlerted  && opResult ? <Alert className={classes.alerting} severity={opResult.level}> [{opResult.response.resultCode}] {opResult.response.resultMessage}</Alert> : <Typography variant="h5">Exchange Asset</Typography>}
+
         <form noValidate autoComplete="off">
 
           <InputBase
