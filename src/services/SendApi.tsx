@@ -1,6 +1,5 @@
 import { Prepare, RippleAPI, TransactionJSON } from "ripple-lib";
 import { FormattedSubmitResponse } from "ripple-lib/dist/npm/transaction/submit";
-import { rippleTx } from "./TransactionApi";
 
 export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount: string) {
     const pd = localStorage.getItem(storageKey)
@@ -17,7 +16,7 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
 
     async function doPrepare(): Promise<Prepare> {
         let payload:TransactionJSON;
-        console.log("isConected: {} " ,api.isConnected())
+        console.log("isConected: {} " ,api.isConnected(), String(issuerAccount).length)
 
 
         if (currency !== 'XRP') {
@@ -28,8 +27,8 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
                 "Amount": {
                     "currency": currency,
                     "value": String(amount),
-                    "issuer": issuerAccount
-                    // "issuer": issuerAccount ? issuerAccount : profileData.accAddress // TODO ???
+                    // "issuer": issuerAccount
+                    "issuer": issuerAccount === "" ? profileData.counterParty : issuerAccount 
 
                 },
                 "Fee": fee

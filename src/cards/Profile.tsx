@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '& > *': {
         margin: theme.spacing(1),
         width: theme.spacing(160),
-        height: theme.spacing(50),
+        height: theme.spacing(55),
       },
     },
     inp: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       margin: theme.spacing(1),
-      marginTop: theme.spacing(10)
+      marginTop: theme.spacing(2)
     },
   }),
 );
@@ -67,6 +67,7 @@ export default function SimplePaper() {
           <TextField id="standard-basic15" label="Account address" onChange={(e) => setProfileData({ ...profileData, accAddress: e.target.value })} value={profileData?.accAddress} />
           <TextField id="filled-basic" label="Account secret" type="password" variant="filled" onChange={(e) => setProfileData({ ...profileData, accSecret: e.target.value })} value={profileData?.accSecret} />
           <TextField id="standard-basic16" label="Server" onChange={(e) => setProfileData({ ...profileData, server: e.target.value })} value={profileData?.server} />
+           <TextField id="standard-basic161" label="Couter Party" disabled={true} value={profileData?.counterParty} />
 
           <Button
             variant="contained"

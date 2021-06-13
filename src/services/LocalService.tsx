@@ -9,13 +9,15 @@ export declare type ProfileData = {
     accUser: string,
     accAddress: string,
     accSecret: string,
-    server: string
+    server: string,
+    counterParty:string
 };
 export const initProfileData: ProfileData = {
     accUser: "",
     accAddress: "",
     accSecret: "",
-    server: "wss://s.altnet.rippletest.net:51233"
+    server: "wss://s.altnet.rippletest.net:51233",
+    counterParty:""
 }
 
  export const CurrencyLabel = new Map<string, string>([

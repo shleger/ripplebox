@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import Alert, { Color } from '@material-ui/lab/Alert'
+import Alert from '@material-ui/lab/Alert'
 import SendApi from '../services/SendApi';
 import { FormattedSubmitResponse } from 'ripple-lib/dist/npm/transaction/submit';
 import { Alertable } from '../services/LocalService';

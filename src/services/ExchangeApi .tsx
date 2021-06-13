@@ -15,6 +15,9 @@ export default function ExchangeApi(storageKey: string, order: FormattedOrderSpe
     const profileData = JSON.parse(String(localStorage.getItem(storageKey)));;
     const api = new RippleAPI({ server: profileData.server });
 
+    order.totalPrice.counterparty = profileData.counterParty
+    order.quantity.counterparty = profileData.counterParty
+
     async function doPrepare() {
 
         const preparedTx = await api.prepareOrder(profileData.accAddress, order)

@@ -87,12 +87,12 @@ export default function Exchange() {
       "direction": direction,
       "quantity": {
         "currency": currencyIn,
-        "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
+        // "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
         "value": String(destValueIn)
       },
       "totalPrice": {
         "currency": currencyOut,
-        "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
+        // "counterparty": "rNnjjJvBmrkboPfUEaD459MrnMLUDgB67x", //TODO rm
         "value": String(destValueOut)
       },
       "passive": state.passive,

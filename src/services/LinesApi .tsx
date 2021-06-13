@@ -117,7 +117,7 @@ export function CreateTrustLineApi(storageKey: string, dest: string, trustCurren
     }).then((ladgerNumber) => {
         console.log('ledgerNumber: ', ladgerNumber);
         return api.on('ledger', ledger => {
-            console.log("Ledger version", ledger.ledgerVersion, "was validated?.")
+            // console.log("Ledger version", ledger.ledgerVersion, "was validated?.")
             if (ledger.ledgerVersion > ledger.maxLedgerVersion) {
                 console.log("If the transaction hasn't succeeded by now, it's expired")
             }
@@ -132,6 +132,10 @@ export function CreateTrustLineApi(storageKey: string, dest: string, trustCurren
         });
         return validated
     }).catch(console.error);
+
+    profileData.counterParty = dest
+    console.log("profileData: ",profileData)
+    localStorage.setItem(storageKey, JSON.stringify(profileData))
 
     return promise
 
