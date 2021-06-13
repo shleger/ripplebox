@@ -6,8 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import Alert from '@material-ui/lab/Alert'
+import Alert, { Color } from '@material-ui/lab/Alert'
 import SendApi from '../services/SendApi';
+import { FormattedSubmitResponse } from 'ripple-lib/dist/npm/transaction/submit';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       marginTop: theme.spacing(1)
     },
+    alerting:{
+      fontSize:'13px'
+    }
   }),
 );
 
@@ -59,9 +63,17 @@ const currencies = [
     label: '¥',
   },
 ];
+
+interface Alertable{
+  level:Color,
+  response: FormattedSubmitResponse
+}
+
+const initOpResult: Alertable = {level:"info", response:{resultCode:"",resultMessage:""}};
 export default function SendAssest() {
   const classes = useStyles();
   const [destAccount, setDestAccount] = useState("")
+  const [opResult, setOpResult] = useState(initOpResult)
   const [issuerAccount, setIssuerAccount] = useState("")
   const [destValue, setDestValue] = useState(0)
   const storageKey = window.location.pathname
@@ -75,7 +87,16 @@ export default function SendAssest() {
     setIsLoaded(false)
 
     SendApi(storageKey, destAccount, currency, destValue, issuerAccount)
-      .then(() => { setIsLoaded(true); setIsAlerted(true) })
+      .then((res) => { setIsLoaded(true); setIsAlerted(true); setOpResult({level:"info", response: (res as FormattedSubmitResponse)}) })
+      .catch((err) => {
+        
+        console.error(err)
+        setIsLoaded(true); 
+        setIsAlerted(true)
+        setOpResult({level:"error", response:{resultCode:"System",resultMessage:String(err).substr(0,200)}})
+
+      })
+      
 
 
   }
@@ -89,7 +110,7 @@ export default function SendAssest() {
   return (
     <div className={classes.root} >
       {isLoaded ? <Paper elevation={3} >
-        {isAlerted ? <Alert severity="info">Asset value sent</Alert> : <Typography variant="h5">Send Asset</Typography>}
+        {isAlerted  && opResult ? <Alert className={classes.alerting} severity={opResult.level}> [{opResult.response.resultCode}] {opResult.response.resultMessage}</Alert> : <Typography variant="h5">Send Asset</Typography>}
 
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} 

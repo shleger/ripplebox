@@ -1,4 +1,5 @@
 import { RippleAPI, TransactionJSON } from "ripple-lib";
+import { FormattedSubmitResponse } from "ripple-lib/dist/npm/transaction/submit";
 
 export default function SendApi(storageKey: string, dest: string, currency: string, amount: number, issuerAccount: string) {
     const pd = localStorage.getItem(storageKey)
@@ -53,7 +54,7 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
     }
 
     // use txBlob from the previous example
-    async function doSubmit(txBlob: any) {
+    async function doSubmit(txBlob: any) : Promise<FormattedSubmitResponse>{
         const latestLedgerVersion = await api.getLedgerVersion()
 
         const result = await api.submit(txBlob)
@@ -65,7 +66,9 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
         // Return the earliest ledger index this transaction could appear in
         // as a result of this submission, which is the first one after the
         // validated ledger at time of submission.
-        return latestLedgerVersion + 1
+        console.log("The earliest ledger index for tx:",  latestLedgerVersion+1)
+
+        return result
     }
 
 
@@ -85,20 +88,23 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
     }).then(blob => {
         console.log('Order Prepared' + blob);
         return doSubmit(blob);
-    }).then((ladgerNumber) => {
-        console.log('ledgerNumber: ', ladgerNumber);
-        return api.on('ledger', ledger => {
-            console.log("Ledger version", ledger.ledgerVersion, "was validated??.")
-            if (ledger.ledgerVersion > ledger.maxLedgerVersion) {
-                console.log("If the transaction hasn't succeeded by now, it's expired")
-            }
-        })
-    }).then((validated) => {
-        console.log('validated');
+    // }).then((ladgerNumber) => {
+    //     console.log('ledgerNumber: ', ladgerNumber);
+    //     return api.on('ledger', ledger => {
+    //         // console.log("Ledger version", ledger.ledgerVersion, "was validated??.")
+    //         if (ledger.ledgerVersion > ledger.maxLedgerVersion) {
+    //             console.log("If the transaction hasn't succeeded by now, it's expired")
+    //         }
+    //     })
+    }).then((result) => {
+        console.log('Result:' + result.resultCode);
+        api.disconnect()
         //TODO return getTran(txIdGlobal)
-    }).then(() => {
-        return api.disconnect()
-    }).catch(console.error);
+        return result
+    })
+    // }).then(() => {
+    //     return api.disconnect()
+    // }).catch(console.error);
 
     return promise
 
