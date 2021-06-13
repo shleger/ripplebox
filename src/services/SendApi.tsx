@@ -25,6 +25,8 @@ export default function SendApi(storageKey: string, dest: string, currency: stri
                     "currency": currency,
                     "value": String(amount),
                     "issuer": issuerAccount
+                    // "issuer": issuerAccount ? issuerAccount : profileData.accAddress // TODO ???
+
                 },
                 "Fee": fee
             }

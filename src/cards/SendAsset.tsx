@@ -67,6 +67,7 @@ export default function SendAssest() {
   const storageKey = window.location.pathname
   const [isLoaded, setIsLoaded] = React.useState(true);
   const [isAlerted, setIsAlerted] = React.useState(false);
+  const [isXrpSelected, setIsXrpSelected] = React.useState(false); 
   const [currency, setCurrency] = React.useState('EUR');
 
 
@@ -79,7 +80,13 @@ export default function SendAssest() {
 
   }
   const handleChange = (event: any) => {
+    const curr = event.target.value
     setCurrency(event.target.value);
+    if(curr === 'XRP'){
+      setIsXrpSelected(true)
+    }else{
+      setIsXrpSelected(false)
+    }
   };
 
   return (
@@ -89,7 +96,7 @@ export default function SendAssest() {
 
         <form className={classes.inp} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Destination account" onChange={(e) => setDestAccount(e.target.value)} value={destAccount} />
-          <TextField id="standard-basic" label="Issuer account" onChange={(e) => setIssuerAccount(e.target.value)} value={issuerAccount} />
+          {isXrpSelected ?"":<TextField id="standard-basic" label="Issuer account" onChange={(e) => setIssuerAccount(e.target.value)} value={issuerAccount} />}
           <TextField
             id="standard-select-currency"
             select

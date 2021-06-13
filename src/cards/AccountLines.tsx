@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
 import { RpcJsonAccountLines } from '../services/LinesApi ';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { logClickCell } from '../services/LocalService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,6 +97,7 @@ export default function AccountLines() {
           checkboxSelection={false}
           className={classes.inp}
           rows={rows}
+          onCellClick={logClickCell}
           columns={columns}
           pageSize={5} />
       </Paper>

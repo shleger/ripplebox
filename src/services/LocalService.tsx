@@ -50,3 +50,6 @@ export const initProfileData: ProfileData = {
       label: '¥',
     },
   ];
+
+  export  const logClickCell = (p:any) => console.log(p.value)
+   

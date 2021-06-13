@@ -6,7 +6,7 @@ import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { AccountObjects } from '../services/AccountApi';
 import { Amount, OfferLedgerEntry, RippledAmount } from 'ripple-lib/dist/npm/common/types/objects';
 import { AccountObjectsResponse } from 'ripple-lib';
-import { CurrencyLabel } from '../services/LocalService';
+import { CurrencyLabel, logClickCell } from '../services/LocalService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +61,7 @@ export default function Orders() {
   const storageKey = window.location.pathname
   const [isLoading, setIsLoading] = React.useState(true);
   const [rows, setRows] = React.useState(rowsInit)
-
+  
   useEffect(() => {
 
 
@@ -139,6 +139,7 @@ export default function Orders() {
           checkboxSelection={false}
           className={classes.inp}
           rows={rows}
+          onCellClick={logClickCell}
           columns={columns}
           pageSize={5} />
       </Paper>
