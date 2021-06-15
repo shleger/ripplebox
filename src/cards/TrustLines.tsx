@@ -42,8 +42,8 @@ export default function TrustLines() {
   const classes = useStyles();
   const [trustAccount, setTrustAccount] = useState("")
   const [limit, setLimit] = useState("100")
-  const [qualityIn, setQualityIn] = useState(0.91)
-  const [qualityOut, setQualityOut] = useState(0.17)
+  const [qualityIn, setQualityIn] = useState(0) //0.91
+  const [qualityOut, setQualityOut] = useState(0) // 0.17
   const [trustCurrency, setTrustCurrency] = React.useState('EUR');
 
   const storageKey = window.location.pathname
