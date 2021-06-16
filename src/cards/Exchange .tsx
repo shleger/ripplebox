@@ -134,9 +134,9 @@ export default function Exchange() {
 
         <form noValidate autoComplete="off">
 
-          <InputBase
+        <InputBase
             className={classes.margin}
-            defaultValue="Direction"
+            defaultValue="Taker Pays"
             inputProps={{ 'aria-label': 'naked' }}
           />
 
@@ -162,7 +162,7 @@ export default function Exchange() {
             <TextField
               id="standard-select-currency"
               select
-              label={"Currency to " + direction}
+              label={"With"}
               value={currencyOut}
               onChange={handleChangeCurOut}
               className={classes.curr}
@@ -177,7 +177,11 @@ export default function Exchange() {
 
             <TextField id="standard-basic12" label="Amount of value" onChange={(e) => setDestValueOut(Number(e.target.value))} value={destValueOut} type='number' />
 
-            <Typography variant="h5" > With</Typography>
+            <InputBase
+            className={classes.margin}
+            defaultValue="Taker Gets"
+            inputProps={{ 'aria-label': 'naked' }}
+            />
 
             <TextField
               id="standard-select2-currency"
